@@ -135,5 +135,8 @@
       }
     }
   },
-  "defaultProject": "calendar-academic"
+  "defaultProject": "calendar-academic",
+  "cli": {
+    "defaultCollection": "@nativescript/schematics"
+  }
 }
