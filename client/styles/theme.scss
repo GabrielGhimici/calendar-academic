@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+@import "palette";
+
+@include mat-core();
+
+
+$primary: mat-palette($mat-blue);
+$accent: mat-palette($mat-blue);
+$theme: mat-light-theme($primary,$accent);
+$success:mat-palette($mat-green);
+$warn: map-get($theme, warn);
+
+
+$custom-typography: mat-typography-config(
+  $headline: mat-typography-level(20px, 24px, 400),
+  $title: mat-typography-level(20px, 24px, 400),
+  $subheading-1: mat-typography-level(16px,20px,400),
+  $subheading-2: mat-typography-level(16px,20px,400),
+  $body-1: mat-typography-level(14px, 16px, 400),
+  $body-2: mat-typography-level(14px, 16px, 500),
+  $caption: mat-typography-level(12px, 16px, 400)
+);
+
+@include mat-base-typography($custom-typography);
+@include angular-material-theme($theme);
