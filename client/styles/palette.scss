@@ -1,9 +1,12 @@
-$app-background-color: #DFE9ED;
-$card-background-color: #f7f7f7;
-$app-main-color: #008496;
-$app-secondary-color: #e78200;
+$app-main-color: #008CA2;
 $app-success: #00c853;
 $app-warn: #d32f2f;
+$custom-grey: (
+  50: #F7F7F7,
+  150: #D5DAE4,
+  350: #ACACAC,
+  850: #425262,
+);
 
 @mixin transparentBackgroundColor($alpha, $color) {
   background-color: rgba(red($color), green($color), blue($color), $alpha);

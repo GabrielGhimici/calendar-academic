@@ -1,0 +1,37 @@
+@import "../../styles/palette";
+@import "../../styles/global-values";
+
+mat-toolbar {
+  background-color: $app-main-color;
+  height: $header-height;
+  img {
+    height: calc(#{$header-height} - 8px);
+  }
+  .header-spacer {
+    flex: 1 1 auto;
+  }
+
+  .user-accessor {
+    @include transparentBackgroundColor(0.85, white);
+    color: $app-main-color;
+    height: calc(#{$header-height} - 30px);
+    width: calc(#{$header-height} - 30px);
+    line-height: calc(#{$header-height} - 30px);
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-align: center;
+    margin: auto 10px auto 0;
+    text-transform: capitalize;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+.body-container {
+  height: calc(100% - #{$header-height});
+  width: 100%;
+  position: relative;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

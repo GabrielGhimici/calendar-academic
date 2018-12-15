@@ -13,12 +13,18 @@ import { environment } from '../environments/environment';
 import { provideReduxForms } from '@angular-redux/form';
 import { createLogger } from 'redux-logger'
 import { AppRoutingModule } from './app-routing.module';
+import { AppRootComponent } from './app-root/app-root.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppRootComponent,
+    PageNotFoundComponent
   ],
   imports: [
+    MatToolbarModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgReduxModule,

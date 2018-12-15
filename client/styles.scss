@@ -12,6 +12,6 @@ html, body {
   height: 100%;
   min-height: 100%;
   margin: 0;
-  background-color: $app-background-color;
+  background-color: map_get($custom-grey, 50);
   font-family: $font-family;
 }
