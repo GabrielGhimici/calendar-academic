@@ -46,7 +46,7 @@ import {
     BrowserModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
-      cookieName: 'PYAToken',
+      cookieName: 'CAToken',
       headerName: 'Authorization',
     }),
     MatButtonModule,
@@ -88,5 +88,4 @@ export class AppModule {
     }
     provideReduxForms(store);
   }
-
 }

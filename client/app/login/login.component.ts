@@ -20,15 +20,12 @@ export class LoginComponent implements OnInit {
                private matSnackBar: MatSnackBar,
                private router: Router
               ) { }
-
-
   ngOnInit() {
   }
 
   startLogin(formValue: any) {
     return this.loginActions.startLogin(formValue);
   }
-
 
   doLogin(formValue: any, formValidity: boolean) {
     if (formValidity) {
