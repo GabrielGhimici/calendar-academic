@@ -1,0 +1,68 @@
+@import "../../styles/palette";
+
+.login-container {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ECEFF1;
+
+  img {
+
+    height: auto;
+    padding-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  .login-card {
+    width: 400px;
+    height: 500px;
+    background-color: $card-background-color;
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      mat-card-title {
+        color: $app-main-color;
+        h2 {
+          font-weight: normal;
+        }
+      }
+    }
+    mat-card-content {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .full-width{
+        width: 90%;
+        margin-top: 18px;
+      }
+    }
+    mat-card-actions {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      button {
+        margin-top: 18px;
+        width: 40%;
+        background-color: $app-main-color;
+        color: white;
+        font-weight: bold;
+
+      }
+
+      .mat-spinner {
+        position: absolute;
+        margin-top: 18px;
+        left: calc((100% + 25%)/2);
+        /deep/ circle {
+          stroke: $app-main-color;
+        }
+      }
+    }
+  }
+}
