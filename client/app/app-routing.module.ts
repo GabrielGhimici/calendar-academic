@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'events',
+    redirectTo: 'event',
     pathMatch: 'full' },
   {
     path: 'event',

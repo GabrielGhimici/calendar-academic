@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { select } from '@angular-redux/store';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
+import { Operation } from '../store/time-navigation/time-navigation';
 
 export interface CalendarDate {
   mDate: moment.Moment;
@@ -19,10 +24,32 @@ export class MonthViewComponent implements OnInit {
   public currentDate = moment();
   public dayNames = ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'];
   public weeks: CalendarDate[][] = [];
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
+
+  @select(['timeNavigation']) readonly timeNavigation$: Observable<any>;
+
   constructor() { }
 
   ngOnInit() {
     this.generateCalendar();
+    this.timeNavigation$.pipe(
+      takeUntil(this.ngUnsubscribe),
+      filter(data => !isNullOrUndefined(data.operation))
+    ).subscribe((data) => {
+      if (data.amount > 0) {
+        if (data.operation === Operation.Add) {
+          this.nextMonth(data.amount);
+        }
+        if (data.operation === Operation.Subtract) {
+          this.prevMonth(data.amount);
+        }
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   ngOnChanges(changes) {
@@ -43,13 +70,15 @@ export class MonthViewComponent implements OnInit {
     return moment(date).isSame(this.currentDate, 'month');
   }
 
-  prevMonth(): void {
-    this.currentDate = moment(this.currentDate).subtract(1, 'months');
+  prevMonth(differentAmount?: number): void {
+    const amount = differentAmount || 1;
+    this.currentDate = moment(this.currentDate).subtract(amount, 'months');
     this.generateCalendar();
   }
 
-  nextMonth(): void {
-    this.currentDate = moment(this.currentDate).add(1, 'months');
+  nextMonth(differentAmount?: number): void {
+    const amount = differentAmount || 1;
+    this.currentDate = moment(this.currentDate).add(amount, 'months');
     this.generateCalendar();
   }
 
@@ -64,7 +93,6 @@ export class MonthViewComponent implements OnInit {
     dates.forEach((week: CalendarDate[]) => {
       week.map((element) => {
         const formattedDate = element.mDate.format('YYYY-MM-DD');
-        console.log(formattedDate);
         const dateEvents = [];
         element.events = dateEvents;
         return element;

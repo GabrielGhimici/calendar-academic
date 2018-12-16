@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { select } from '@angular-redux/store';
+import { dispatch, select } from '@angular-redux/store';
 import { Observable, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../utils/is-null-or-undefined';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TimeNavigationActions } from './store/time-navigation/time-navigation.actions';
+import { TimeUnit } from './store/time-navigation/time-navigation';
 
 export const CALENDAR_VIEW = {
   MONTH: 'month',
@@ -27,11 +29,13 @@ export class EventViewsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private timeNavActions: TimeNavigationActions
   ) { }
 
   ngOnInit() {
     this.router$.pipe(
+      takeUntil(this.ngUnsubscribe),
       filter(route => !isNullOrUndefined(route))
     ).subscribe((route) => {
       this.getSelectedView(route);
@@ -54,5 +58,32 @@ export class EventViewsComponent implements OnInit {
 
   onViewChange(view: string) {
     this.router.navigate([`./${view}`], {relativeTo: this.route});
+  }
+
+  private getTimeUnit() {
+    switch (this.calendarView) {
+      case CALENDAR_VIEW.MONTH:
+        return TimeUnit.Months;
+      case CALENDAR_VIEW.WEEK:
+        return TimeUnit.Weeks;
+      case CALENDAR_VIEW.DAY:
+        return TimeUnit.Days;
+      default:
+        return null;
+    }
+  }
+
+  @dispatch()
+  nextTimeUnit() {
+    const timeUnit = this.getTimeUnit();
+    this.currentDate = moment(this.currentDate).add(1, timeUnit);
+    return this.timeNavActions.add(1);
+  }
+
+  @dispatch()
+  previousTimeUnit() {
+    const timeUnit = this.getTimeUnit();
+    this.currentDate = moment(this.currentDate).subtract(1, timeUnit);
+    return this.timeNavActions.subtract(1);
   }
 }

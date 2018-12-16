@@ -2,10 +2,14 @@
   <div class="actions-container">
     <div class="start-section">
       <h3>{{currentDate.format('MMMM YYYY')}}</h3>
-      <button mat-icon-button [disableRipple]="true">
+      <button mat-icon-button
+              [disableRipple]="true"
+              (click)="previousTimeUnit()">
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
-      <button mat-icon-button [disableRipple]="true">
+      <button mat-icon-button
+              [disableRipple]="true"
+              (click)="nextTimeUnit()">
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
       <button mat-mini-fab [disableRipple]="true">

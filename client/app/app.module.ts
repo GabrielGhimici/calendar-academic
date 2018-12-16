@@ -28,6 +28,7 @@ import {
 } from '@angular/material';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
+import { TimeNavigationActions } from './app-root/event-views/store/time-navigation/time-navigation.actions';
 
 @NgModule({
   declarations: [
@@ -51,8 +52,6 @@ import { EventViewsComponent } from './app-root/event-views/event-views.componen
     BrowserAnimationsModule,
     NgReduxModule,
     NgReduxRouterModule,
-    CommonModule,
-    BrowserModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'CAToken',
@@ -69,6 +68,7 @@ import { EventViewsComponent } from './app-root/event-views/event-views.componen
     AppRoutingModule
   ],
   providers: [
+    TimeNavigationActions,
     RootEpics,
     NgReduxRouter,
     LoginActions,

@@ -13,6 +13,7 @@
       h3 {
         margin: 0 2*$spacing-unit 0 0;
         text-transform: capitalize;
+        min-width: 150px;
         line-height: 38px;
         color: map_get($custom-grey, 850)
       }
