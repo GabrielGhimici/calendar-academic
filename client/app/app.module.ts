@@ -27,19 +27,24 @@ import {
   MatSnackBarModule, MatProgressSpinnerModule, MatInputModule
 } from '@angular/material';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
+import { EventViewsComponent } from './app-root/event-views/event-views.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AppRootComponent,
     PageNotFoundComponent,
-    MonthViewComponent
+    MonthViewComponent,
+    EventViewsComponent
   ],
   imports: [
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatButtonToggleModule,
+    CommonModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

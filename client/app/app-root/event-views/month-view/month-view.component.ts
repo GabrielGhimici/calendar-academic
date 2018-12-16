@@ -15,7 +15,7 @@ export interface CalendarDate {
 })
 export class MonthViewComponent implements OnInit {
   public currentDate = moment();
-  public dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  public dayNames = ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'];
   public weeks: CalendarDate[] = [];
   constructor() { }
 
@@ -69,7 +69,8 @@ export class MonthViewComponent implements OnInit {
   }
 
   fillDates(currentMoment: moment.Moment): CalendarDate[] {
-    const firstOfMonth = moment(currentMoment).startOf('month').day();
+    let firstOfMonth = moment(currentMoment).startOf('month').day() - 1;
+    firstOfMonth = firstOfMonth < 0 ? 6 : firstOfMonth;
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
     const start = firstDayOfGrid.date();
     return _.range(start, start + 42)

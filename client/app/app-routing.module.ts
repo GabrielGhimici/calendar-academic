@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRootComponent } from './app-root/app-root.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
+import { EventViewsComponent } from './app-root/event-views/event-views.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
@@ -12,17 +13,28 @@ const routes: Routes = [
     redirectTo: 'events',
     pathMatch: 'full' },
   {
-    path: 'events',
+    path: 'event',
     component: AppRootComponent,
     children: [
       {
         path: '',
-        redirectTo: 'month',
+        redirectTo: 'views',
         pathMatch: 'full'
       },
       {
-        path: 'month',
-        component: MonthViewComponent
+        path: 'views',
+        component: EventViewsComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'month',
+            pathMatch: 'full'
+          },
+          {
+            path: 'month',
+            component: MonthViewComponent
+          }
+        ]
       }
     ]
   },

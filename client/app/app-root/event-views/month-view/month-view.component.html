@@ -9,7 +9,6 @@
     'has-event': day.events.length > 0}" (click)="viewEvents(day.events.length > 0, day.events, day.mDate)">
       <div class="caption-container">
         <div class="day-caption">{{day.mDate?.date()}}</div>
-        <mat-icon *ngIf="isSelectedMonth(day.mDate) && (isToday(day.mDate) || isAfterToday(day.mDate))">add</mat-icon>
       </div>
       <div class="bottom-container">
         <div class="bullet-container" *ngIf="isSelectedMonth(day.mDate) && day.events.length > 0">
@@ -20,9 +19,4 @@
       </div>
     </mat-grid-tile>
   </mat-grid-list>
-  <div class="navigation-buttons">
-    <button mat-raised-button (click)="prevMonth()">PrevMonth</button>
-    <div class="month-cell">{{currentDate.format('MMMM YYYY')}}</div>
-    <button mat-raised-button (click)="nextMonth()">NextMonth</button>
-  </div>
 </div>

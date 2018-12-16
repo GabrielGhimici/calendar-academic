@@ -1,0 +1,37 @@
+@import '../../../styles/global-values';
+@import '../../../styles/palette';
+
+.views-container {
+  width: 100%;
+  .actions-container {
+    padding: $default-spacing;
+    display: flex;
+    justify-content: space-between;
+    .start-section {
+      display: flex;
+      h3 {
+        margin: 0 2*$spacing-unit 0 0;
+        text-transform: capitalize;
+        line-height: 38px;
+        color: map_get($custom-grey, 850)
+      }
+      .mat-icon-button {
+        margin: auto $spacing-unit auto 0;
+        border: 1px solid map_get($custom-grey, 850);
+        color: map_get($custom-grey, 850);
+        width: 4*$spacing-unit;
+        height: 4*$spacing-unit;
+        line-height: 4*$spacing-unit;
+        .mat-icon {
+          line-height: 20px;
+        }
+      }
+      .mat-mini-fab {
+        margin: auto $spacing-unit;
+        &.mat-accent {
+          background-color: $app-main-color;
+        }
+      }
+    }
+  }
+}
