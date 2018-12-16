@@ -1,6 +1,7 @@
 .mat-button-toggle-group {
   border: 1px solid map_get($custom-grey,350);
   box-shadow: none;
+  margin: auto 0;
   &.mat-button-toggle-standalone {
     border-radius: 4px;
   }

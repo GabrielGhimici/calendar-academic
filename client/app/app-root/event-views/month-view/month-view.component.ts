@@ -14,9 +14,11 @@ export interface CalendarDate {
   styleUrls: ['./month-view.component.scss']
 })
 export class MonthViewComponent implements OnInit {
+  public rowSize: number = 7;
+  public columnSize: number = 6;
   public currentDate = moment();
   public dayNames = ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'];
-  public weeks: CalendarDate[] = [];
+  public weeks: CalendarDate[][] = [];
   constructor() { }
 
   ngOnInit() {
@@ -59,16 +61,19 @@ export class MonthViewComponent implements OnInit {
 
   generateCalendar(): void {
     let dates = this.fillDates(this.currentDate);
-    dates = dates.map((element) => {
-      const formattedDate = element.mDate.format('YYYY-MM-DD');
-      const dateEvents = [];
-      element.events = dateEvents;
-      return element;
+    dates.forEach((week: CalendarDate[]) => {
+      week.map((element) => {
+        const formattedDate = element.mDate.format('YYYY-MM-DD');
+        console.log(formattedDate);
+        const dateEvents = [];
+        element.events = dateEvents;
+        return element;
+      });
     });
     this.weeks = dates;
   }
 
-  fillDates(currentMoment: moment.Moment): CalendarDate[] {
+  fillDates(currentMoment: moment.Moment): CalendarDate[][] {
     let firstOfMonth = moment(currentMoment).startOf('month').day() - 1;
     firstOfMonth = firstOfMonth < 0 ? 6 : firstOfMonth;
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
@@ -81,6 +86,14 @@ export class MonthViewComponent implements OnInit {
           events: null,
           mDate: d,
         };
-      });
+      })
+      .reduce((accumulator, currentValue, currentIndex) => {
+        const row: number = Math.trunc(currentIndex / this.rowSize);
+        if (!accumulator[row]) {
+          accumulator.push([]);
+        }
+        accumulator[row].push(currentValue);
+        return accumulator;
+      }, []);
   }
 }

@@ -1,22 +1,24 @@
-<div style="width: 100%; height: 100%">
-  <mat-grid-list cols="7" rowHeight="50px" class="calendar-header">
-    <mat-grid-tile *ngFor="let name of dayNames">
+<div class="month-view-container">
+  <div class="calendar-header">
+    <div class="day-element" *ngFor="let name of dayNames">
       {{name}}
-    </mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list cols="7" rowHeight="3:1" class="calendar-body">
-    <mat-grid-tile *ngFor="let day of weeks" [ngClass]="{'disabled-cell':!isSelectedMonth(day.mDate),'today-cell':(day.today && isSelectedMonth(day.mDate)),
-    'has-event': day.events.length > 0}" (click)="viewEvents(day.events.length > 0, day.events, day.mDate)">
-      <div class="caption-container">
-        <div class="day-caption">{{day.mDate?.date()}}</div>
-      </div>
-      <div class="bottom-container">
-        <div class="bullet-container" *ngIf="isSelectedMonth(day.mDate) && day.events.length > 0">
-          <div class="bullet" *ngFor="let ev of day.events" [ngClass]="{'red': ev.colorLabel === 0, 'green': ev.colorLabel === 1,
-          'yellow': ev.colorLabel === 2}" [matTooltip]="ev.event.start_time + ' ' + ev.event.description" [matTooltipPosition]="'after'"></div>
+    </div>
+  </div>
+  <div class="calendar-body">
+    <div *ngFor="let week of weeks" class="calendar-week">
+      <div *ngFor="let day of week"
+           class="calendar-cell"
+           [ngClass]="{
+             'disabled-cell':!isSelectedMonth(day.mDate),
+             'today-cell':(day.today && isSelectedMonth(day.mDate)),
+             'has-event': day.events.length > 0
+           }">
+        <div class="caption-container">
+          <div class="day-caption">{{day.mDate?.date()}}</div>
         </div>
-        <div class="events" *ngIf="isSelectedMonth(day.mDate) && day.events.length > 0">{{day.events.length}}</div>
+        <div class="bottom-container">
+        </div>
       </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>

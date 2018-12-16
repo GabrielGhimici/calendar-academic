@@ -1,118 +1,68 @@
+@import '../../../../styles/global-values';
 @import '../../../../styles/palette';
 
-.calendar-header {
-  border: 1px solid map_get($custom-grey, 350);
-  user-select: none;
-  mat-grid-tile {
-    border-right: 1px solid map_get($custom-grey, 350);
-  }
-  mat-grid-tile:last-of-type {
-    border-right: none;
-  }
-}
-
-.calendar-body {
-  border: 1px solid map_get($custom-grey, 350);
-  border-top: none;
-  user-select: none;
-  mat-grid-tile {
-    border-right: 1px solid map_get($custom-grey, 350);
+$number-of-columns: 7;
+$number-of-rows: 6;
+.month-view-container {
+  width: 100%;
+  height: 100%;
+  .calendar-header {
+    box-sizing: border-box;
+    border-left: 1px solid map_get($custom-grey, 350);
     border-top: 1px solid map_get($custom-grey, 350);
-    &.disabled-cell {
-      background-color: map_get($custom-grey,150);
-      color: map_get($custom-grey, 350);
+    border-bottom: 1px solid map_get($custom-grey, 350);
+    width: 100%;
+    display: flex;
+    user-select: none;
+    .day-element {
+      box-sizing: border-box;
+      height: 4*$spacing-unit;
+      line-height: 4*$spacing-unit;
+      border-right: 1px solid map_get($custom-grey, 350);
+      text-align: center;
+      width: calc(100% / #{$number-of-columns});
     }
-    &.today-cell {
-      background-color: lighten($app-main-color, 5%);
-      color: white;
-    }
+  }
 
-    &.has-event {
-      cursor: pointer;
-    }
-
-    /deep/.mat-figure {
-      flex-direction: column;
-    }
-
-    .caption-container {
-      width: 80%;
-      height: 50%;
+  .calendar-body {
+    box-sizing: border-box;
+    border-left: 1px solid map_get($custom-grey, 350);
+    user-select: none;
+    height: calc(100% - (4 * #{$spacing-unit}));
+    width: 100%;
+    .calendar-week {
+      box-sizing: border-box;
+      border-bottom: 1px solid map_get($custom-grey, 350);
       display: flex;
-      justify-content: space-between;
-      align-content: center;
-      .day-caption {
-        flex: 1 1 auto;
-        height: auto;
-        margin: auto;
-      }
-      mat-icon {
-        margin: auto 0;
-        cursor: pointer;
-      }
-    }
-
-    .bottom-container {
-      width: 80%;
-      height: 50%;
-      display: flex;
-      .bullet-container {
-        flex: 1 0 auto;
-        display: flex;
-        flex-direction: row;
-        .bullet {
-          width: 10px;
-          height: 10px;
-          margin: auto 3px;
-          border-radius: 5px;
-          &.red {
-            background-color: red;
-          }
-          &.green {
-            background-color: green;
-          }
-          &.yellow {
-            background-color: yellow;
+      height: calc(100% / #{$number-of-rows});
+      .calendar-cell {
+        box-sizing: border-box;
+        border-right: 1px solid map_get($custom-grey, 350);
+        width: calc(100% / #{$number-of-columns});
+        &.disabled-cell {
+          background-color: map_get($custom-grey, 150);
+          color: map_get($custom-grey, 350);
+        }
+        &.today-cell {
+          background-color: lighten($app-main-color, 5%);
+          color: white;
+        }
+        &.has-event {
+          cursor: pointer;
+        }
+        .caption-container {
+          width: 80%;
+          height: 50%;
+          display: flex;
+          justify-content: space-between;
+          .day-caption {
+            flex: 1 1 auto;
+            height: auto;
+            margin: auto;
+            padding: 0 $spacing-unit;
           }
         }
       }
-      .events {
-        color: white;
-        text-align: center;
-        width: 15px;
-        padding: 0 5px;
-        border-radius: 10px;
-        background-color: $app-main-color;
-        height: auto;
-        margin: auto;
-      }
     }
-  }
-}
-
-.navigation-buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  button {
-    background-color: $app-main-color;
-    color: white;
-    font-weight: 500;
-    margin-right: 15px;
-  }
-
-  button:last-of-type {
-    margin-right: 0;
-  }
-
-  .month-cell {
-    line-height: 36px;
-    height: 36px;
-    margin-right: 15px;
-    border: 1px solid map_get($custom-grey, 350);
-    border-radius: 2px;
-    padding: 0 15px;
-    user-select: none;
-    text-transform: capitalize;
   }
 }
