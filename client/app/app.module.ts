@@ -24,7 +24,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import {
   MatButtonModule, MatToolbarModule, MatIconModule,
   MatCardModule, MatFormFieldModule,
-  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule
+  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule, MatTooltipModule, MatButtonToggleModule
 } from '@angular/material';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
