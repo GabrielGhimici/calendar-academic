@@ -11,29 +11,59 @@ import { createEpicMiddleware } from 'redux-observable';
 import { rootReducer } from './store/root.reducer';
 import { environment } from '../environments/environment';
 import { provideReduxForms } from '@angular-redux/form';
-import { createLogger } from 'redux-logger'
+import { createLogger } from 'redux-logger';
 import { AppRoutingModule } from './app-routing.module';
 import { AppRootComponent } from './app-root/app-root.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginComponent } from './login/login.component';
+import { LoginActions } from 'client/app/store/login/login.actions';
+import { LoginGuard } from 'client/app/login/login.guard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import {
+  MatButtonModule, MatToolbarModule, MatIconModule,
+  MatCardModule, MatFormFieldModule,
+  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     AppRootComponent,
     PageNotFoundComponent
   ],
   imports: [
     MatToolbarModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     NgReduxModule,
     NgReduxRouterModule,
+    CommonModule,
+    BrowserModule,
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'CAToken',
+      headerName: 'Authorization',
+    }),
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatInputModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
     AppRoutingModule
   ],
   providers: [
     RootEpics,
-    NgReduxRouter
+    NgReduxRouter,
+    LoginActions,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })
@@ -59,5 +89,4 @@ export class AppModule {
     }
     provideReduxForms(store);
   }
-
 }
