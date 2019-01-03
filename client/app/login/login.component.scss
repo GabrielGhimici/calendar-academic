@@ -22,7 +22,7 @@
   .login-card {
     width: 400px;
     height: 500px;
-    background-color: $card-background-color;
+    background-color: map_get($custom-grey, 50);
     mat-card-header {
       display: flex;
       justify-content: center;

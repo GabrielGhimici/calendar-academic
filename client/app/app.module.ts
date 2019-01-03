@@ -24,7 +24,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import {
   MatButtonModule, MatToolbarModule, MatIconModule,
   MatCardModule, MatFormFieldModule,
-  MatSnackBarModule, MatProgressSpinnerModule
+  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule
 } from '@angular/material';
 
 @NgModule({
@@ -52,6 +52,7 @@ import {
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatInputModule,
     MatCardModule,
     MatFormFieldModule,
     MatSnackBarModule,
