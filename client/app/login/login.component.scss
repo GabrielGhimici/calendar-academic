@@ -48,7 +48,7 @@
         .mat-spinner {
           position: absolute;
           margin-top: 18px;
-          left: calc((100% + 25%) / 2);
+          left: calc((100% + 40%) / 2);
 
           /deep/ circle {
             stroke: $app-main-color;
