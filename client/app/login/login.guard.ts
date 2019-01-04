@@ -24,8 +24,9 @@ export class LoginGuard implements CanActivate {
     return this.loginService.isLoggedIn
       .pipe(filter(value => !isUndefined(value)))
       .pipe(map(value => {
+        console.log(value);
         const cookies = this.getCookies();
-        if (!value || !cookies['PYAToken']) {
+        if (!value || !cookies['CAToken']) {
           this.router.navigate(['/login']);
           return false;
         }

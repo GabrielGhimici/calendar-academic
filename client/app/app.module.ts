@@ -20,7 +20,7 @@ import { LoginActions } from 'client/app/store/login/login.actions';
 import { LoginGuard } from 'client/app/login/login.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import {
   MatButtonModule, MatToolbarModule, MatIconModule,
   MatCardModule, MatFormFieldModule,
@@ -29,6 +29,10 @@ import {
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
 import { TimeNavigationActions } from './app-root/event-views/store/time-navigation/time-navigation.actions';
+import { LoginService } from './login/login.service';
+import { LoginEpics } from './store/login/login.epic';
+import { XsfrHttpInterceptor } from './core/interceptors/http-xsfr-interceptor';
+import { ErrorInterceptor } from './core/interceptors/http-error-interceptor';
 
 @NgModule({
   declarations: [
@@ -68,11 +72,23 @@ import { TimeNavigationActions } from './app-root/event-views/store/time-navigat
     AppRoutingModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: XsfrHttpInterceptor,
+      multi: true,
+    },
     TimeNavigationActions,
     RootEpics,
     NgReduxRouter,
     LoginActions,
-    LoginGuard
+    LoginGuard,
+    LoginEpics,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

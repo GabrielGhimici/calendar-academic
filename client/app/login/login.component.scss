@@ -10,7 +10,6 @@
   background-color: #ECEFF1;
 
   img {
-
     height: auto;
     padding-bottom: 20px;
     display: block;
@@ -18,49 +17,42 @@
     margin-right: auto;
     width: 50%;
   }
-
-  .login-card {
-    width: 400px;
-    height: 500px;
-    background-color: map_get($custom-grey, 50);
-    mat-card-header {
-      display: flex;
-      justify-content: center;
-      mat-card-title {
-        color: $app-main-color;
-        h2 {
-          font-weight: normal;
+  .login-form {
+    width: 100%;
+    margin: 24px;
+    max-width: 430px;
+    min-width: 350px;
+    .login-card {
+      padding: 24px;
+      mat-card-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .full-width {
+          width: 100%;
+          margin-top: 18px;
         }
       }
-    }
-    mat-card-content {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      .full-width{
-        width: 90%;
-        margin-top: 18px;
-      }
-    }
-    mat-card-actions {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      button {
-        margin-top: 18px;
-        width: 40%;
-        background-color: $app-main-color;
-        color: white;
-        font-weight: bold;
+      mat-card-actions {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        button {
+          margin-top: 18px;
+          width: 40%;
+          background-color: $app-main-color;
+          color: white;
+          font-weight: bold;
 
-      }
+        }
+        .mat-spinner {
+          position: absolute;
+          margin-top: 18px;
+          left: calc((100% + 25%) / 2);
 
-      .mat-spinner {
-        position: absolute;
-        margin-top: 18px;
-        left: calc((100% + 25%)/2);
-        /deep/ circle {
-          stroke: $app-main-color;
+          /deep/ circle {
+            stroke: $app-main-color;
+          }
         }
       }
     }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import {combineEpics, createEpicMiddleware} from 'redux-observable';
+import { combineEpics, ofType } from 'redux-observable';
 import { LoginActions } from './login.actions';
 import { LoginService } from 'client/app/login/login.service';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import { Observable, of } from 'rxjs';
-import {map, catchError} from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { PayloadAction } from '../payload-action';
 
 @Injectable()
 export class LoginEpics {
@@ -19,10 +18,14 @@ export class LoginEpics {
 
   private loginEpic() {
     return action$ => action$
-      .ofType(LoginActions.LOGIN_STARTED)
-      .switchMap(action => this.loginService.logIn(action.payload)
-        .pipe(map(data => this.loginActions.loginSucceeded(data['OK'])))
-        .pipe(catchError(data => of(this.loginActions.loginFailed(data))))
+      .pipe(
+        ofType(LoginActions.LOGIN_STARTED),
+        switchMap((action: PayloadAction) => this.loginService.logIn(action.payload)
+          .pipe(
+            map(data => this.loginActions.loginSucceeded(data['OK'])),
+            catchError(data => of(this.loginActions.loginFailed(data)))
+          )
+        )
       );
   }
 }

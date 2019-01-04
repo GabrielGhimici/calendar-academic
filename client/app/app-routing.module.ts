@@ -6,12 +6,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
 import { LoginComponent } from './login/login.component';
+import { LoginGuard } from './login/login.guard';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'event',
-    pathMatch: 'full' },
+    pathMatch: 'full'
+  },
   {
     path: 'event',
     component: AppRootComponent,
@@ -36,7 +38,8 @@ const routes: Routes = [
           }
         ]
       }
-    ]
+    ],
+    canActivate: [LoginGuard]
   },
   {
     path: 'login',

@@ -1,21 +1,18 @@
 <div class="login-container">
-
-  <form #loginForm="ngForm" (ngSubmit)="doLogin(loginForm.value, loginForm.valid)">
+  <form #loginForm="ngForm" class="login-form" (ngSubmit)="doLogin(loginForm.value, loginForm.valid)">
     <mat-card class="login-card">
       <img src="../../assets/images/fmi-logo-blue.png"/>
-      <mat-card-header>
-        <mat-card-title><h2>Autentificare</h2></mat-card-title>
-      </mat-card-header>
       <mat-card-content>
         <mat-form-field class="full-width">
-          <input #email matInput ngControl ngModel name='email' placeholder="Email" type="text" required pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+          <input matInput ngControl ngModel name='email' placeholder="Email" type="text" required pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
           <mat-icon matSuffix>account_circle</mat-icon>
-          <mat-error *ngIf="!loginForm.controls.email?.valid">Email is required or invalid</mat-error>
+          <mat-error *ngIf="loginForm.controls.email?.errors?.pattern">Email-ul este invalid</mat-error>
+          <mat-error *ngIf="loginForm.controls.email?.errors?.required">Email-ul este camp obligatoriu</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input #password matInput ngControl ngModel name='password' placeholder="Parola" type="password" required>
+          <input matInput ngControl ngModel name='password' placeholder="Parola" type="password" required>
           <mat-icon matSuffix>lock</mat-icon>
-          <mat-error *ngIf="!loginForm.controls.password?.valid">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.controls.password?.errors?.required">Password este camp obligatoriu</mat-error>
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions>

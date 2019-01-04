@@ -8,7 +8,7 @@ const INITIAL_STATE: TimeNavigation = {
   amount: 0
 };
 
-export function timeNavigationReducer(state: TimeNavigation = INITIAL_STATE, action: PayloadAction<any, any>) {
+export function timeNavigationReducer(state: TimeNavigation = INITIAL_STATE, action: PayloadAction) {
   switch (action.type) {
     case TimeNavigationActions.ADD:
     case TimeNavigationActions.SUBTRACT: {
