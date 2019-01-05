@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoginEpics } from './login/login.epic';
+import { LoginEpics } from '../login/store/login.epic';
 
 @Injectable()
 export class RootEpics {

@@ -1,0 +1,22 @@
+<div class="day-view-container">
+  <div class="day-header">
+    <div class="day-element dummy-cell"></div>
+    <div class="day-element"
+         [ngClass]="{'today-cell': isToday(day)}">
+      {{day.format('dddd') + ', ' + day.format('DD MMM')}}
+    </div>
+  </div>
+  <div class="day-container">
+    <div class="hour-labels-container">
+      <div class="hour-label"
+           *ngFor="let hour of hourLabels">
+        {{hour}}
+      </div>
+    </div>
+    <div class="hour-grid">
+      <div class="grid-column border-left">
+        <div class="grid-element" *ngFor="let hour of hours"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { isNullOrUndefined } from 'util';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { LoginActions } from 'client/app/store/login/login.actions';
 import { Observable, Subject } from 'rxjs';
 import { dispatch, select} from '@angular-redux/store';
 import { filter } from 'rxjs/operators';
+import { LoginActions } from '../store/login.actions';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +46,7 @@ export class LoginComponent implements OnDestroy {
       this.loginError$
         .pipe(
           filter((data) => !isNullOrUndefined(data))
-        ).subscribe((data) => {
+        ).subscribe(() => {
           this.matSnackBar.open(
             'Incorrect email or password',
             '',

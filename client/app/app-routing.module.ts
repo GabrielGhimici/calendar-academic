@@ -5,8 +5,10 @@ import { AppRootComponent } from './app-root/app-root.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './login/web-component/login.component';
 import { LoginGuard } from './login/login.guard';
+import { WeekViewComponent } from './app-root/event-views/week-view/week-view.component';
+import { DayViewComponent } from './app-root/event-views/day-view/day-view.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,14 @@ const routes: Routes = [
           {
             path: 'month',
             component: MonthViewComponent
+          },
+          {
+            path: 'week',
+            component: WeekViewComponent
+          },
+          {
+            path: 'day',
+            component: DayViewComponent
           }
         ]
       }

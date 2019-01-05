@@ -4,7 +4,7 @@ import { LoginActions } from './login.actions';
 import { LoginService } from 'client/app/login/login.service';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { PayloadAction } from '../payload-action';
+import { PayloadAction } from '../../store/payload-action';
 
 @Injectable()
 export class LoginEpics {

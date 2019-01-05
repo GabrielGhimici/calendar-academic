@@ -1,7 +1,7 @@
 <div class="login-container">
   <form #loginForm="ngForm" class="login-form" (ngSubmit)="doLogin(loginForm.value, loginForm.valid)">
     <mat-card class="login-card">
-      <img src="../../assets/images/fmi-logo-blue.png"/>
+      <img src="../../../assets/images/fmi-logo-blue.png"/>
       <mat-card-content>
         <mat-form-field class="full-width">
           <input matInput ngControl ngModel name='email' placeholder="Email" type="text" required pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">

@@ -15,8 +15,7 @@ import { createLogger } from 'redux-logger';
 import { AppRoutingModule } from './app-routing.module';
 import { AppRootComponent } from './app-root/app-root.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoginComponent } from './login/login.component';
-import { LoginActions } from 'client/app/store/login/login.actions';
+import { LoginComponent } from './login/web-component/login.component';
 import { LoginGuard } from 'client/app/login/login.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -30,9 +29,12 @@ import { MonthViewComponent } from './app-root/event-views/month-view/month-view
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
 import { TimeNavigationActions } from './app-root/event-views/store/time-navigation/time-navigation.actions';
 import { LoginService } from './login/login.service';
-import { LoginEpics } from './store/login/login.epic';
 import { XsfrHttpInterceptor } from './core/interceptors/http-xsfr-interceptor';
 import { ErrorInterceptor } from './core/interceptors/http-error-interceptor';
+import { WeekViewComponent } from './app-root/event-views/week-view/week-view.component';
+import { DayViewComponent } from './app-root/event-views/day-view/day-view.component';
+import { LoginActions } from './login/store/login.actions';
+import { LoginEpics } from './login/store/login.epic';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ErrorInterceptor } from './core/interceptors/http-error-interceptor';
     AppRootComponent,
     PageNotFoundComponent,
     MonthViewComponent,
-    EventViewsComponent
+    EventViewsComponent,
+    WeekViewComponent,
+    DayViewComponent
   ],
   imports: [
     MatToolbarModule,
