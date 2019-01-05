@@ -35,6 +35,7 @@ import { WeekViewComponent } from './app-root/event-views/week-view/week-view.co
 import { DayViewComponent } from './app-root/event-views/day-view/day-view.component';
 import { LoginActions } from './login/store/login.actions';
 import { LoginEpics } from './login/store/login.epic';
+import { ManageEventComponent } from './app-root/manage-event/manage-event.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { LoginEpics } from './login/store/login.epic';
     MonthViewComponent,
     EventViewsComponent,
     WeekViewComponent,
-    DayViewComponent
+    DayViewComponent,
+    ManageEventComponent
   ],
   imports: [
     MatToolbarModule,
