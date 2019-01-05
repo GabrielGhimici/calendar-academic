@@ -1,0 +1,24 @@
+<div class="month-view-container">
+  <div class="calendar-header">
+    <div class="day-element" *ngFor="let name of dayNames">
+      {{name}}
+    </div>
+  </div>
+  <div class="calendar-body">
+    <div *ngFor="let week of weeks" class="calendar-week">
+      <div *ngFor="let day of week"
+           class="calendar-cell"
+           [ngClass]="{
+             'disabled-cell':!isSelectedMonth(day.mDate),
+             'today-cell':(day.today && isSelectedMonth(day.mDate)),
+             'has-event': day.events.length > 0
+           }">
+        <div class="caption-container">
+          <div class="day-caption">{{day.mDate?.date()}}</div>
+        </div>
+        <div class="bottom-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

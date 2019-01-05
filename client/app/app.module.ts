@@ -15,35 +15,51 @@ import { createLogger } from 'redux-logger';
 import { AppRoutingModule } from './app-routing.module';
 import { AppRootComponent } from './app-root/app-root.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoginComponent } from './login/login.component';
-import { LoginActions } from 'client/app/store/login/login.actions';
+import { LoginComponent } from './login/web-component/login.component';
 import { LoginGuard } from 'client/app/login/login.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import {
   MatButtonModule, MatToolbarModule, MatIconModule,
   MatCardModule, MatFormFieldModule,
-  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule
+  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule, MatTooltipModule, MatButtonToggleModule
 } from '@angular/material';
+import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
+import { EventViewsComponent } from './app-root/event-views/event-views.component';
+import { TimeNavigationActions } from './app-root/event-views/store/time-navigation/time-navigation.actions';
+import { LoginService } from './login/login.service';
+import { XsfrHttpInterceptor } from './core/interceptors/http-xsfr-interceptor';
+import { ErrorInterceptor } from './core/interceptors/http-error-interceptor';
+import { WeekViewComponent } from './app-root/event-views/week-view/week-view.component';
+import { DayViewComponent } from './app-root/event-views/day-view/day-view.component';
+import { LoginActions } from './login/store/login.actions';
+import { LoginEpics } from './login/store/login.epic';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AppRootComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MonthViewComponent,
+    EventViewsComponent,
+    WeekViewComponent,
+    DayViewComponent
   ],
   imports: [
     MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatButtonToggleModule,
+    CommonModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgReduxModule,
     NgReduxRouterModule,
-    CommonModule,
-    BrowserModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'CAToken',
@@ -60,10 +76,23 @@ import {
     AppRoutingModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: XsfrHttpInterceptor,
+      multi: true,
+    },
+    TimeNavigationActions,
     RootEpics,
     NgReduxRouter,
     LoginActions,
-    LoginGuard
+    LoginGuard,
+    LoginEpics,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

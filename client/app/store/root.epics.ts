@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import { LoginEpics } from '../login/store/login.epic';
 
 @Injectable()
 export class RootEpics {
-  constructor() {}
+  constructor(
+    private loginEpic: LoginEpics
+  ) {}
 
   public createEpics() {
-    return [];
+    return [
+      this.loginEpic.createEpic(),
+    ];
   }
 }

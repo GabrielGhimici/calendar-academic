@@ -3,14 +3,10 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 
 import { AppRoutingModule } from './app-routing.module.tns';
 import { AppComponent } from './app.component';
-import { AppRootComponent } from './app-root/app-root.component';
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AppRootComponent,
-    LoginComponent,
+    AppComponent
   ],
   imports: [
     NativeScriptModule,

@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
-export interface PayloadAction<P, M> extends Action {
-  payload?: P;
+export interface PayloadAction extends Action {
+  payload?: any;
   error?: any;
-  meta?: M;
+  meta?: any;
 }

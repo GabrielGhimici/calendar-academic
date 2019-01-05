@@ -1,0 +1,93 @@
+@import '../../../../styles/global-values';
+@import '../../../../styles/palette';
+
+$number-of-columns: 7;
+$hour-label-width: 50;
+.week-view-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(0,0,0,0);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: map_get($custom-grey, 350);
+  }
+
+  .week-header {
+    box-sizing: border-box;
+    border-left: 1px solid map_get($custom-grey, 350);
+    border-top: 1px solid map_get($custom-grey, 350);
+    border-bottom: 1px solid map_get($custom-grey, 350);
+    width: 100%;
+    display: flex;
+    user-select: none;
+    position: sticky;
+    top: 0;
+    .day-element {
+      box-sizing: border-box;
+      height: 6*$spacing-unit;
+      line-height: 6*$spacing-unit;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-right: 1px solid map_get($custom-grey, 350);
+      padding: 0 $spacing-unit;
+      width: calc((100% -  #{$hour-label-width}px) / #{$number-of-columns});
+      background: map_get($custom-grey, 50);
+      text-transform: capitalize;
+      &.today-cell {
+        background-color: lighten($app-main-color, 5%);
+        color: white;
+      }
+      &.dummy-cell {
+        width: #{$hour-label-width}px;
+      }
+    }
+  }
+  .week-container {
+    width: 100%;
+    display: flex;
+    .hour-labels-container {
+      width: #{$hour-label-width}px;
+      display: flex;
+      flex-direction: column;
+      padding-top: 2*$spacing-unit;
+      .hour-label {
+        height: 4*$spacing-unit;
+        line-height: 4*$spacing-unit;
+        padding: 0 $spacing-unit / 2;
+        text-align: right;
+        font-size: 12px;
+      }
+    }
+    .hour-grid {
+      width: calc(100% - #{$hour-label-width}px);
+      display: flex;
+      padding-bottom: 2*$spacing-unit;
+      .grid-column {
+        width: calc(100% / #{$number-of-columns});
+        border-right: 1px solid map_get($custom-grey, 350);
+        &.border-left {
+          border-left: 1px solid map_get($custom-grey, 350);
+        }
+        .grid-element {
+          box-sizing: border-box;
+          height: 4*$spacing-unit;
+          line-height: 4*$spacing-unit;
+          border-bottom: 1px solid map_get($custom-grey, 350);
+        }
+      }
+    }
+  }
+}

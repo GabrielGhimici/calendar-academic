@@ -1,0 +1,25 @@
+<div class="week-view-container">
+  <div class="week-header">
+    <div class="day-element dummy-cell"></div>
+    <div class="day-element"
+         [ngClass]="{'today-cell': day.today}"
+         *ngFor="let day of days">
+      {{day.label}}
+    </div>
+  </div>
+  <div class="week-container">
+    <div class="hour-labels-container">
+      <div class="hour-label"
+           *ngFor="let hour of hourLabels">
+        {{hour}}
+      </div>
+    </div>
+    <div class="hour-grid">
+      <div class="grid-column"
+           [ngClass]="{'border-left': i === 0}"
+           *ngFor="let day of days; let i=index" >
+        <div class="grid-element" *ngFor="let hour of hours"></div>
+      </div>
+    </div>
+  </div>
+</div>

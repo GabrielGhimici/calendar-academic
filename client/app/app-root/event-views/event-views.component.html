@@ -1,0 +1,43 @@
+<div class="views-container">
+  <div class="actions-container">
+    <div class="start-section">
+      <h3>{{currentDate.format('MMMM YYYY')}}</h3>
+      <button mat-icon-button
+              [disableRipple]="true"
+              (click)="previousTimeUnit()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <button mat-icon-button
+              [disableRipple]="true"
+              (click)="nextTimeUnit()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      <button mat-mini-fab [disableRipple]="true">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-button-toggle-group
+      appearance="legacy"
+      [(ngModel)]="calendarView"
+      (change)="onViewChange($event.value)">
+      <mat-button-toggle
+        [value]="CALENDAR_VIEW.MONTH"
+        [disableRipple]="true">
+        Lună
+      </mat-button-toggle>
+      <mat-button-toggle
+        [value]="CALENDAR_VIEW.WEEK"
+        [disableRipple]="true">
+        Săptămână
+      </mat-button-toggle>
+      <mat-button-toggle
+        [value]="CALENDAR_VIEW.DAY"
+        [disableRipple]="true">
+        Zi
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="current-view-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

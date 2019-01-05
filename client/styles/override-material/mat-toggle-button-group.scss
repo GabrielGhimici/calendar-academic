@@ -1,0 +1,30 @@
+.mat-button-toggle-group {
+  border: 1px solid map_get($custom-grey,350);
+  box-shadow: none;
+  margin: auto 0;
+  &.mat-button-toggle-standalone {
+    border-radius: 4px;
+  }
+  mat-button-toggle {
+    flex: 1;
+    text-align: center;
+    color: map_get($custom-grey,850);
+    background-color: map_get($custom-grey, 50);
+    .mat-button-toggle-label-content {
+      min-width: calc(100% - 32px);
+    }
+
+    &.mat-button-toggle {
+      border-left: 1px solid map_get($custom-grey,350);
+    }
+
+    &.mat-button-toggle:first-child {
+      border-left: none;
+    }
+
+    &.mat-button-toggle-checked {
+      background-color: $app-main-color;
+      color: white;
+    }
+  }
+}
