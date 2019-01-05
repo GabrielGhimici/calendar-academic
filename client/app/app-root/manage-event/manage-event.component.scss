@@ -1,0 +1,81 @@
+@import '../../../styles/global-values';
+@import '../../../styles/palette';
+
+.manage-event-container {
+  width: 100%;
+  .spacing-bottom {
+    margin-bottom: 2*$spacing-unit;
+  }
+  h3 {
+    margin: 0;
+    min-width: 150px;
+    color: map_get($custom-grey, 850)
+  }
+  .event-metadata {
+    padding: $default-spacing;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+    border-bottom: 1px solid map_get($custom-grey, 350);
+    .metadata-section {
+      display: flex;
+      h3 {
+        text-transform: capitalize;
+        margin: 0 2*$spacing-unit 0 0;
+        line-height: 38px;
+      }
+      .mat-icon-button {
+        margin: auto $spacing-unit auto 0;
+        border: 1px solid map_get($custom-grey, 850);
+        color: map_get($custom-grey, 850);
+        width: 4*$spacing-unit;
+        height: 4*$spacing-unit;
+        line-height: 4*$spacing-unit;
+        .mat-icon {
+          line-height: 20px;
+        }
+        &.primary-button {
+          border: 1px solid $app-main-color;
+          color: $app-main-color;
+        }
+      }
+    }
+  }
+  .edit-event-container {
+    padding: $default-spacing;
+    display: flex;
+    .event-details {
+      padding-right: $default-spacing;
+      border-right: 1px solid map_get($custom-grey, 350);
+      flex: 1 1 60%;
+      display: flex;
+      flex-direction: column;
+      .recurrence-selector {
+        display: flex;
+        justify-content: space-between;
+      }
+      .event-dates {
+        display: flex;
+        justify-content: space-between;
+        .separator {
+          font-size: 24px;
+          color: map_get($custom-grey, 350);
+          padding: 0 $spacing-unit;
+          margin: auto 0;
+        }
+        .date {
+          width: 30%;
+        }
+        .hour {
+          width: 10%;
+        }
+      }
+    }
+    .recurrent-details {
+      padding-left: $default-spacing;
+      flex: 1 1 40%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

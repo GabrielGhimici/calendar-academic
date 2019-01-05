@@ -1,3 +1,67 @@
-<p>
-  manage-event works!
-</p>
+<div class="manage-event-container">
+  <div class="event-metadata">
+    <div class="metadata-section">
+      <h3 *ngIf="!isEdit">Eveniment nou</h3>
+      <h3 *ngIf="isEdit">Modificare nou</h3>
+    </div>
+    <div class="metadata-section">
+      <button mat-icon-button
+              class="primary-button"
+              [disableRipple]="true">
+        <mat-icon>save</mat-icon>
+      </button>
+      <a mat-icon-button
+         [disableRipple]="true"
+         routerLink="/event">
+        <mat-icon>close</mat-icon>
+      </a>
+    </div>
+  </div>
+  <div class="edit-event-container">
+    <div class="event-details">
+      <h3 class="spacing-bottom">Detalii eveniment</h3>
+      <div class="recurrence-selector spacing-bottom">
+        <div>Eveniment recurent</div>
+        <mat-slide-toggle [disableRipple]="true"></mat-slide-toggle>
+      </div>
+      <mat-form-field>
+        <input matInput name="name" placeholder="Nume" type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput name="location" placeholder="Locatie" type="text">
+      </mat-form-field>
+      <div class="event-dates">
+        <mat-form-field class="date">
+          <input matInput [matDatepicker]="startDate" name="startDate" placeholder="Dată început" type="text">
+          <mat-datepicker-toggle matPrefix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="hour">
+          <mat-select name="startHour" placeholder="Oră început">
+            <mat-option *ngFor="let hour of hourLabels"
+                        [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="separator">-</div>
+        <mat-form-field class="hour">
+          <mat-select name="endHour" placeholder="Oră sfârșit">
+            <mat-option *ngFor="let hour of hourLabels"
+                        [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="date">
+          <input matInput [matDatepicker]="endDate" name="endDate" placeholder="Dată sfârșit" type="text">
+          <mat-datepicker-toggle matPrefix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="recurrent-details">
+      <h3>Detalii recurență</h3>
+    </div>
+  </div>
+</div>
