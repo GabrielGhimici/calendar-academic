@@ -20,7 +20,6 @@ export class LoginService {
 
   get isLoggedIn() {
     return this.http.get('api/user/token_info').pipe(map((_: boolean) => {
-      console.log(_);
       return _['valid'] === true;
     }));
   }
