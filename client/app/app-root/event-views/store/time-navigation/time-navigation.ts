@@ -1,6 +1,7 @@
 export interface TimeNavigation {
-  operation: Operation;
-  amount: number;
+  currentDate: any;
+  periodStart: any;
+  periodEnd: any;
 }
 
 export enum TimeUnit {

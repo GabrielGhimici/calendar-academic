@@ -27,24 +27,17 @@ export class WeekViewComponent implements OnInit {
   public currentDate = moment();
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
-  @select(['timeNavigation']) readonly timeNavigation$: Observable<any>;
+  @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
 
   constructor() { }
 
   ngOnInit() {
-    this.generateWeek();
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
-      filter(data => !isNullOrUndefined(data.operation))
+      filter(data => !isNullOrUndefined(data))
     ).subscribe((data) => {
-      if (data.amount > 0) {
-        if (data.operation === Operation.Add) {
-          this.nextWeek(data.amount);
-        }
-        if (data.operation === Operation.Subtract) {
-          this.prevWeek(data.amount);
-        }
-      }
+      this.currentDate = data;
+      this.generateWeek();
     })
   }
 
@@ -62,18 +55,6 @@ export class WeekViewComponent implements OnInit {
 
   isToday(date: moment.Moment): boolean {
     return moment().isSame(moment(date), 'day');
-  }
-
-  prevWeek(differentAmount?: number): void {
-    const amount = differentAmount || 1;
-    this.currentDate = moment(this.currentDate).subtract(amount, 'weeks');
-    this.generateWeek();
-  }
-
-  nextWeek(differentAmount?: number): void {
-    const amount = differentAmount || 1;
-    this.currentDate = moment(this.currentDate).add(amount, 'weeks');
-    this.generateWeek();
   }
 
   generateWeek() {

@@ -5,7 +5,7 @@ import { select } from '@angular-redux/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
-import { Operation } from '../store/time-navigation/time-navigation';
+
 
 export interface CalendarDate {
   mDate: moment.Moment;
@@ -26,24 +26,17 @@ export class MonthViewComponent implements OnInit {
   public weeks: CalendarDate[][] = [];
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  @select(['timeNavigation']) readonly timeNavigation$: Observable<any>;
+  @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
 
   constructor() { }
 
   ngOnInit() {
-    this.generateCalendar();
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
-      filter(data => !isNullOrUndefined(data.operation))
+      filter(data => !isNullOrUndefined(data))
     ).subscribe((data) => {
-      if (data.amount > 0) {
-        if (data.operation === Operation.Add) {
-          this.nextMonth(data.amount);
-        }
-        if (data.operation === Operation.Subtract) {
-          this.prevMonth(data.amount);
-        }
-      }
+      this.currentDate = data;
+      this.generateCalendar();
     })
   }
 
@@ -68,18 +61,6 @@ export class MonthViewComponent implements OnInit {
 
   isSelectedMonth(date: moment.Moment): boolean {
     return moment(date).isSame(this.currentDate, 'month');
-  }
-
-  prevMonth(differentAmount?: number): void {
-    const amount = differentAmount || 1;
-    this.currentDate = moment(this.currentDate).subtract(amount, 'months');
-    this.generateCalendar();
-  }
-
-  nextMonth(differentAmount?: number): void {
-    const amount = differentAmount || 1;
-    this.currentDate = moment(this.currentDate).add(amount, 'months');
-    this.generateCalendar();
   }
 
   private getRandomIntInclusive(min, max) {

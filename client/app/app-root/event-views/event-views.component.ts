@@ -6,12 +6,12 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../utils/is-null-or-undefined';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TimeNavigationActions } from './store/time-navigation/time-navigation.actions';
-import { TimeUnit } from './store/time-navigation/time-navigation';
 
-export const CALENDAR_VIEW = {
-  MONTH: 'month',
-  WEEK: 'week',
-  DAY: 'day',
+
+export enum CalendarView {
+  MONTH ='month',
+  WEEK = 'week',
+  DAY ='day',
 };
 
 @Component({
@@ -21,11 +21,12 @@ export const CALENDAR_VIEW = {
 })
 export class EventViewsComponent implements OnInit {
   public currentDate = moment();
-  public CALENDAR_VIEW = CALENDAR_VIEW;
-  public calendarView = CALENDAR_VIEW.MONTH;
+  public CALENDAR_VIEW = CalendarView;
+  public calendarView: any = CalendarView.MONTH;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   @select(['router']) readonly router$: Observable<any>;
+  @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
 
   constructor(
     private router: Router,
@@ -34,6 +35,12 @@ export class EventViewsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.timeNavigation$.pipe(
+      takeUntil(this.ngUnsubscribe),
+      filter(data => !isNullOrUndefined(data))
+    ).subscribe((data) => {
+      this.currentDate = data;
+    });
     this.router$.pipe(
       takeUntil(this.ngUnsubscribe),
       filter(route => !isNullOrUndefined(route))
@@ -60,30 +67,13 @@ export class EventViewsComponent implements OnInit {
     this.router.navigate([`./${view}`], {relativeTo: this.route});
   }
 
-  private getTimeUnit() {
-    switch (this.calendarView) {
-      case CALENDAR_VIEW.MONTH:
-        return TimeUnit.Months;
-      case CALENDAR_VIEW.WEEK:
-        return TimeUnit.Weeks;
-      case CALENDAR_VIEW.DAY:
-        return TimeUnit.Days;
-      default:
-        return null;
-    }
-  }
-
   @dispatch()
   nextTimeUnit() {
-    const timeUnit = this.getTimeUnit();
-    this.currentDate = moment(this.currentDate).add(1, timeUnit);
-    return this.timeNavActions.add(1);
+    return this.timeNavActions.add(1, this.calendarView);
   }
 
   @dispatch()
   previousTimeUnit() {
-    const timeUnit = this.getTimeUnit();
-    this.currentDate = moment(this.currentDate).subtract(1, timeUnit);
-    return this.timeNavActions.subtract(1);
+    return this.timeNavActions.subtract(1, this.calendarView);
   }
 }

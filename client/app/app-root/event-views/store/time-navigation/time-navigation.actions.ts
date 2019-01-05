@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Operation } from './time-navigation';
+import { CalendarView } from '../../event-views.component';
 
 @Injectable()
 export class TimeNavigationActions {
   static readonly ADD = '[TIME_NAVIGATION]ADD';
   static readonly SUBTRACT = '[TIME_NAVIGATION]SUBTRACT';
 
-  public add(amount: number) {
+  public add(amount: number, context: CalendarView) {
     return {
       type: TimeNavigationActions.ADD,
       payload: {
-        amount,
-        operation: Operation.Add
+        context,
+        amount
       }
     }
   }
 
-  public subtract(amount: number) {
+  public subtract(amount: number, context: CalendarView) {
     return {
       type: TimeNavigationActions.SUBTRACT,
       payload: {
-        amount,
-        operation: Operation.Subtract
+        context,
+        amount
       }
     }
   }

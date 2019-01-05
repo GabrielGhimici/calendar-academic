@@ -5,7 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { select } from '@angular-redux/store';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
-import { Operation } from '../store/time-navigation/time-navigation';
 
 @Component({
   selector: 'day-view',
@@ -18,41 +17,22 @@ export class DayViewComponent implements OnInit {
   public hourLabels: string[] = [];
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
-  @select(['timeNavigation']) readonly timeNavigation$: Observable<any>;
+  @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
 
   constructor() { }
 
   ngOnInit() {
-    this.generateDay();
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
-      filter(data => !isNullOrUndefined(data.operation))
+      filter(data => !isNullOrUndefined(data))
     ).subscribe((data) => {
-      if (data.amount > 0) {
-        if (data.operation === Operation.Add) {
-          this.nextDay(data.amount);
-        }
-        if (data.operation === Operation.Subtract) {
-          this.prevDay(data.amount);
-        }
-      }
+      this.day = data;
+      this.generateDay();
     })
   }
 
   isToday(date: moment.Moment): boolean {
     return moment().isSame(moment(date), 'day');
-  }
-
-  prevDay(differentAmount?: number): void {
-    const amount = differentAmount || 1;
-    this.day = moment(this.day).subtract(amount, 'days');
-    this.generateDay();
-  }
-
-  nextDay(differentAmount?: number): void {
-    const amount = differentAmount || 1;
-    this.day = moment(this.day).add(amount, 'days');
-    this.generateDay();
   }
 
   generateDay() {
