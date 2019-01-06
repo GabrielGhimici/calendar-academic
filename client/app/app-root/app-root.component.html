@@ -1,7 +1,10 @@
 <mat-toolbar>
   <img src="../../assets/images/fmi-logo-white.png"/>
   <span class="header-spacer"></span>
-  <span class="user-accessor">Z</span>
+  <span class="user-accessor" [matMenuTriggerFor]="userMenu">Z</span>
+  <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item [disableRipple]="true" (click)="logOutUser()">LogOut</button>
+  </mat-menu>
 </mat-toolbar>
 <div class="body-container">
   <router-outlet></router-outlet>

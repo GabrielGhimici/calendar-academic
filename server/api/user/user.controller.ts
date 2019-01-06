@@ -16,6 +16,14 @@ export class UserController {
     return this.proxyService.handleLoginProxy(request, response, next);
   }
 
+
+  @Post('/logout')
+  doLogout( @Request() request,
+            @Response() response,
+            @Next() next) {
+    return this.proxyService.handleSimpleResponseProxy('/service')(request, response, next);
+  }
+
   @Get('/token_info')
   getTokenInfo( @Request() request,
                 @Response() response,

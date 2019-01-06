@@ -51,7 +51,6 @@ export class ManageEventComponent implements OnInit {
 
   @dispatch()
   saveEvent() {
-    console.log(this.event, this.eventActions);
     return this.eventActions.saveStart(this.event);
   }
 
