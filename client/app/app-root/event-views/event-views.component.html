@@ -12,9 +12,11 @@
               (click)="nextTimeUnit()">
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
-      <button mat-mini-fab [disableRipple]="true">
+      <a mat-mini-fab
+         [disableRipple]="true"
+         routerLink="../new">
         <mat-icon>add</mat-icon>
-      </button>
+      </a>
     </div>
     <mat-button-toggle-group
       appearance="legacy"

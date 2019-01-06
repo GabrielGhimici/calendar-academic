@@ -21,9 +21,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import {
-  MatButtonModule, MatToolbarModule, MatIconModule,
-  MatCardModule, MatFormFieldModule,
-  MatSnackBarModule, MatProgressSpinnerModule, MatInputModule, MatTooltipModule, MatButtonToggleModule
+  MatButtonModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatSnackBarModule,
+  MatProgressSpinnerModule,
+  MatInputModule,
+  MatTooltipModule,
+  MatButtonToggleModule,
+  MatSlideToggleModule,
+  MatDatepickerModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatSelectModule
 } from '@angular/material';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
@@ -35,6 +44,23 @@ import { WeekViewComponent } from './app-root/event-views/week-view/week-view.co
 import { DayViewComponent } from './app-root/event-views/day-view/day-view.component';
 import { LoginActions } from './login/store/login.actions';
 import { LoginEpics } from './login/store/login.epic';
+import { ManageEventComponent } from './app-root/manage-event/manage-event.component';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateModule } from '@angular/material-moment-adapter';
+import { EventEpics } from './app-root/manage-event/store/event.epics';
+import { EventActions } from './app-root/manage-event/store/event.actions';
+import { ManageEventService } from './app-root/manage-event/manage-event.service';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD MMM YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -45,7 +71,8 @@ import { LoginEpics } from './login/store/login.epic';
     MonthViewComponent,
     EventViewsComponent,
     WeekViewComponent,
-    DayViewComponent
+    DayViewComponent,
+    ManageEventComponent
   ],
   imports: [
     MatToolbarModule,
@@ -73,6 +100,10 @@ import { LoginEpics } from './login/store/login.epic';
     MatFormFieldModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MomentDateModule,
+    MatSelectModule,
     AppRoutingModule
   ],
   providers: [
@@ -86,13 +117,28 @@ import { LoginEpics } from './login/store/login.epic';
       useClass: XsfrHttpInterceptor,
       multi: true,
     },
+    {
+      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+      useValue: { useUtc: true }
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_FORMATS
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'ro'
+    },
     TimeNavigationActions,
     RootEpics,
     NgReduxRouter,
     LoginActions,
     LoginGuard,
     LoginEpics,
-    LoginService
+    LoginService,
+    EventEpics,
+    EventActions,
+    ManageEventService
   ],
   bootstrap: [AppComponent]
 })

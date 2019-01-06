@@ -1,0 +1,154 @@
+<div class="manage-event-container">
+  <div class="event-metadata">
+    <div class="metadata-section">
+      <h3 *ngIf="!isEdit">Eveniment nou</h3>
+      <h3 *ngIf="isEdit">Modificare nou</h3>
+    </div>
+    <div class="metadata-section">
+      <button mat-icon-button
+              class="primary-button"
+              (click)="saveEvent()"
+              [disableRipple]="true">
+        <mat-icon>save</mat-icon>
+      </button>
+      <a mat-icon-button
+         [disableRipple]="true"
+         routerLink="/event">
+        <mat-icon>close</mat-icon>
+      </a>
+    </div>
+  </div>
+  <div class="edit-event-container">
+    <div class="event-details">
+      <h3 class="spacing-bottom">Detalii eveniment</h3>
+      <div class="binary-selector spacing-bottom">
+        <div>Eveniment recurent</div>
+        <mat-slide-toggle [disableRipple]="true" [(ngModel)]="event.recurrent"></mat-slide-toggle>
+      </div>
+      <mat-form-field [floatLabel]="'always'">
+        <input matInput name="name" [(ngModel)]="event.name" placeholder="Nume" type="text">
+      </mat-form-field>
+      <mat-form-field [floatLabel]="'always'">
+        <input matInput name="location" [(ngModel)]="event.location" placeholder="Locatie" type="text">
+      </mat-form-field>
+      <div class="event-dates space-between" *ngIf="!event.recurrent">
+        <mat-form-field class="date" [floatLabel]="'always'">
+          <input matInput [matDatepicker]="startDate" [(ngModel)]="event.startDate" name="startDate" placeholder="Dată început" type="text">
+          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="hour" [floatLabel]="'always'">
+          <mat-select name="startHour" placeholder="Oră început" [(ngModel)]="event.startHour" [disabled]="allDay">
+            <mat-option *ngFor="let hour of hourLabels"
+                        [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="separator">-</div>
+        <mat-form-field class="hour" [floatLabel]="'always'">
+          <mat-select name="endHour" placeholder="Oră sfârșit" [(ngModel)]="event.endHour" [disabled]="allDay">
+            <mat-option *ngFor="let hour of hourLabels"
+                        [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="date" [floatLabel]="'always'">
+          <input matInput [matDatepicker]="endDate" name="endDate" [(ngModel)]="event.endDate" placeholder="Dată sfârșit" type="text">
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="event-dates" *ngIf="event.recurrent">
+        <mat-form-field class="hour" [floatLabel]="'always'">
+          <mat-select name="startHour" placeholder="Oră început" [(ngModel)]="event.startHour" [disabled]="allDay">
+            <mat-option *ngFor="let hour of hourLabels"
+                        [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="separator">-</div>
+        <mat-form-field class="hour" [floatLabel]="'always'">
+          <mat-select name="endHour" placeholder="Oră sfârșit" [(ngModel)]="event.endHour" [disabled]="allDay">
+            <mat-option *ngFor="let hour of hourLabels"
+                        [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="binary-selector spacing-bottom">
+        <div>Toată ziua</div>
+        <mat-slide-toggle [disableRipple]="true" [(ngModel)]="allDay" (change)="toggleAllDay()"></mat-slide-toggle>
+      </div>
+      <div class="repeat-information spacing-bottom" *ngIf="event.recurrent">
+        <mat-icon>repeat</mat-icon>
+        <div class="information-content">{{generateRecurrentInformation()}}</div>
+      </div>
+      <mat-form-field [floatLabel]="'always'"
+                      class="description-container">
+        <textarea matInput
+                  placeholder="Descriere"
+                  [mat-autosize]="true"
+                  [matAutosizeMaxRows]="10"
+                  [matAutosizeMinRows]="10"
+                  [(ngModel)]="event.eventDescription"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="recurrent-details" *ngIf="event.recurrent">
+      <h3 class="spacing-bottom">Detalii recurență</h3>
+      <mat-form-field class="date" [floatLabel]="'always'">
+        <input matInput [matDatepicker]="rStartDate" name="startDate" [(ngModel)]="event.startDate" placeholder="Dată început" type="text">
+        <mat-datepicker-toggle matSuffix [for]="rStartDate"></mat-datepicker-toggle>
+        <mat-datepicker #rStartDate></mat-datepicker>
+      </mat-form-field>
+      <div class="frequency-selector">
+        <div class="frequency-count">
+          Se repetă la fiecare
+          <mat-form-field class="frequency" [floatLabel]="'never'">
+            <mat-select name="frequency" [(ngModel)]="event.frequency">
+              <mat-option *ngFor="let value of frequency"
+                          [value]="value">
+                {{value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          {{event.frequency === 1 ? 'săptămână' : 'săptămâni'}}.
+        </div>
+        <div class="frequency-days spacing-bottom">
+          <div>În zilele:</div>
+          <div class="days">
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('monday') >= 0}"
+                 (click)="toggleDay('monday')">Lun.</div>
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('tuesday') >= 0}"
+                 (click)="toggleDay('tuesday')">Mar.</div>
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('wednesday') >= 0}"
+                 (click)="toggleDay('wednesday')">Mie.</div>
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('thursday') >= 0}"
+                 (click)="toggleDay('thursday')">Joi.</div>
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('friday') >= 0}"
+                 (click)="toggleDay('friday')">Vin.</div>
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('saturday') >= 0}"
+                 (click)="toggleDay('saturday')">Sâm.</div>
+            <div class="day"
+                 [ngClass]="{'selected': event.recurringDays.indexOf('sunday') >= 0}"
+                 (click)="toggleDay('sunday')">Dum.</div>
+          </div>
+        </div>
+      </div>
+      <mat-form-field class="date" [floatLabel]="'always'">
+        <input matInput [matDatepicker]="rEndDate" name="endDate" [(ngModel)]="event.endDate" placeholder="Dată sfârșit" type="text">
+        <mat-datepicker-toggle matSuffix [for]="rEndDate"></mat-datepicker-toggle>
+        <mat-datepicker #rEndDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

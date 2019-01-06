@@ -31,4 +31,18 @@ mat-toolbar {
   height: calc(100% - #{$header-height});
   width: 100%;
   position: relative;
+  overflow: auto;
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0);
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgba(0,0,0,0);
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: map_get($custom-grey, 350);
+  }
 }

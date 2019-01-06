@@ -9,6 +9,7 @@ import { LoginComponent } from './login/web-component/login.component';
 import { LoginGuard } from './login/login.guard';
 import { WeekViewComponent } from './app-root/event-views/week-view/week-view.component';
 import { DayViewComponent } from './app-root/event-views/day-view/day-view.component';
+import { ManageEventComponent } from './app-root/manage-event/manage-event.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,15 @@ const routes: Routes = [
             component: DayViewComponent
           }
         ]
-      }
+      },
+      {
+        path: 'new',
+        component: ManageEventComponent
+      },
+      {
+        path: 'edit/:id',
+        component: ManageEventComponent
+      },
     ],
     canActivate: [LoginGuard]
   },
