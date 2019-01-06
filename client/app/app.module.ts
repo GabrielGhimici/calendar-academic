@@ -46,6 +46,9 @@ import { LoginActions } from './login/store/login.actions';
 import { LoginEpics } from './login/store/login.epic';
 import { ManageEventComponent } from './app-root/manage-event/manage-event.component';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateModule } from '@angular/material-moment-adapter';
+import { EventEpics } from './app-root/manage-event/store/event.epics';
+import { EventActions } from './app-root/manage-event/store/event.actions';
+import { ManageEventService } from './app-root/manage-event/manage-event.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -132,7 +135,10 @@ export const MY_FORMATS = {
     LoginActions,
     LoginGuard,
     LoginEpics,
-    LoginService
+    LoginService,
+    EventEpics,
+    EventActions,
+    ManageEventService
   ],
   bootstrap: [AppComponent]
 })
