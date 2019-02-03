@@ -28,7 +28,7 @@ $number-of-rows: 6;
     box-sizing: border-box;
     border-left: 1px solid map_get($custom-grey, 350);
     user-select: none;
-    height: calc(100% - (4 * #{$spacing-unit}));
+    height: calc(100% - (4 * #{$spacing-unit}) - #{$dimension-deviation});
     width: 100%;
     .calendar-week {
       box-sizing: border-box;

@@ -10,8 +10,8 @@ $font-family:  Roboto, Lato, Helvetica, Arial, sans-serif !default;
 
 html, body {
   width: 100%;
-  height: calc(100% - #{$dimension-deviation});
-  min-height: calc(100% - #{$dimension-deviation});
+  height: calc(100%);
+  min-height: calc(100%);
   margin: 0;
   background-color: map_get($custom-grey, 50);
   font-family: $font-family;
