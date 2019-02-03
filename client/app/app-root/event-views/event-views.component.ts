@@ -6,13 +6,9 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../utils/is-null-or-undefined';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TimeNavigationActions } from './store/time-navigation/time-navigation.actions';
-
-
-export enum CalendarView {
-  MONTH ='month',
-  WEEK = 'week',
-  DAY ='day',
-};
+import { EventListActions } from './store/event-list/event-list.actions';
+import { getMonthLimits, getWeekLimits } from './store/time-navigation/time-navigation.reducer';
+import { CalendarView } from './store/time-navigation/time-navigation';
 
 @Component({
   selector: 'event-view',
@@ -31,7 +27,8 @@ export class EventViewsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private timeNavActions: TimeNavigationActions
+    private timeNavActions: TimeNavigationActions,
+    private eventListActions: EventListActions
   ) { }
 
   ngOnInit() {
@@ -40,6 +37,7 @@ export class EventViewsComponent implements OnInit {
       filter(data => !isNullOrUndefined(data))
     ).subscribe((data) => {
       this.currentDate = data;
+      this.updateInterval();
     });
     this.router$.pipe(
       takeUntil(this.ngUnsubscribe),
@@ -65,6 +63,37 @@ export class EventViewsComponent implements OnInit {
 
   onViewChange(view: string) {
     this.router.navigate([`./${view}`], {relativeTo: this.route});
+    this.updateInterval();
+  }
+
+  @dispatch()
+  updateInterval() {
+    let start = this.currentDate;
+    let end = this.currentDate;
+    let interval;
+    console.log('before check =>>',start, end);
+    switch (this.calendarView) {
+      case CalendarView.MONTH: {
+        interval = getMonthLimits(this.currentDate);
+        break;
+      }
+      case CalendarView.WEEK: {
+        interval = getWeekLimits(this.currentDate);
+        break;
+      }
+      case CalendarView.DAY:
+      default: {
+        interval = null;
+      }
+    }
+    console.log('after check =>>',interval, start, end);
+    if (!isNullOrUndefined(interval)) {
+      start = interval.firstDayOfGrid;
+      start.hours(0).minutes(0).seconds(0);
+      end = interval.endDayOfGrid;
+      end.hours(0).minutes(0).seconds(0);
+    }
+    return this.eventListActions.updateInterval(start, end);
   }
 
   @dispatch()

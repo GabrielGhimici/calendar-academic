@@ -20,7 +20,7 @@ export class ManageEventService {
         start_hour: event.startHour,
         end_hour: event.endHour,
         frequency: event.frequency,
-        recurring_days: event.recurringDays.join(',')
+        recurring_days: event.recurringDays.join(';')
       };
       return this.http.put('/api/event/createPrivateRecurentEvent', payload);
     } else {

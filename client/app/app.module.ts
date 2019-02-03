@@ -49,6 +49,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateModule } from '@angular/mate
 import { EventEpics } from './app-root/manage-event/store/event.epics';
 import { EventActions } from './app-root/manage-event/store/event.actions';
 import { ManageEventService } from './app-root/manage-event/manage-event.service';
+import { EventListEpics } from './app-root/event-views/store/event-list/event-list.epics';
+import { EventListActions } from './app-root/event-views/store/event-list/event-list.actions';
 
 export const MY_FORMATS = {
   parse: {
@@ -139,7 +141,9 @@ export const MY_FORMATS = {
     LoginService,
     EventEpics,
     EventActions,
-    ManageEventService
+    ManageEventService,
+    EventListEpics,
+    EventListActions
   ],
   bootstrap: [AppComponent]
 })

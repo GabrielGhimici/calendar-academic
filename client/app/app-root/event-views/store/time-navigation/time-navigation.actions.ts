@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CalendarView } from '../../event-views.component';
+import { CalendarView } from './time-navigation';
 
 @Injectable()
 export class TimeNavigationActions {
