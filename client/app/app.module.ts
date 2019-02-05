@@ -32,7 +32,7 @@ import {
   MatTooltipModule,
   MatButtonToggleModule,
   MatSlideToggleModule,
-  MatDatepickerModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatSelectModule, MatMenuModule
+  MatDatepickerModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatSelectModule, MatMenuModule, MatListModule
 } from '@angular/material';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
@@ -51,6 +51,8 @@ import { EventActions } from './app-root/manage-event/store/event.actions';
 import { ManageEventService } from './app-root/manage-event/manage-event.service';
 import { EventListEpics } from './app-root/event-views/store/event-list/event-list.epics';
 import { EventListActions } from './app-root/event-views/store/event-list/event-list.actions';
+import { ProfileEpics } from './store/profile/profile.epics';
+import { ProfileActions } from './store/profile/profile.actions';
 
 export const MY_FORMATS = {
   parse: {
@@ -107,6 +109,7 @@ export const MY_FORMATS = {
     MomentDateModule,
     MatSelectModule,
     MatMenuModule,
+    MatListModule,
     AppRoutingModule
   ],
   providers: [
@@ -143,7 +146,9 @@ export const MY_FORMATS = {
     EventActions,
     ManageEventService,
     EventListEpics,
-    EventListActions
+    EventListActions,
+    ProfileEpics,
+    ProfileActions
   ],
   bootstrap: [AppComponent]
 })

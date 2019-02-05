@@ -7,6 +7,13 @@ export class UserController {
     private proxyService: ProxyService
   ){}
 
+  @Get('/details')
+  getProfile(@Request() request,
+             @Response() response,
+             @Next() next) {
+    return this.proxyService.handleProxy('/service')(request, response, next);
+  }
+
   @Post('/login')
   doLogin( @Request() request,
            @Response() response,

@@ -1,8 +1,22 @@
 <mat-toolbar>
   <img src="../../assets/images/fmi-logo-white.png"/>
   <span class="header-spacer"></span>
-  <span class="user-accessor" [matMenuTriggerFor]="userMenu">Z</span>
+  <span class="user-accessor" [matMenuTriggerFor]="userMenu">{{profile?.username[0]}}</span>
   <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+    <mat-list>
+      <mat-list-item>
+        <div mat-line class="indicator">Username: </div>
+        <div mat-line class="main-info">{{profile?.username}}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <div mat-line class="indicator">Email: </div>
+        <div mat-line class="main-info">{{profile?.email}}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <div mat-line class="indicator">Grupa: </div>
+        <div mat-line class="main-info">{{profile?.affiliation}}</div>
+      </mat-list-item>
+    </mat-list>
     <button mat-menu-item [disableRipple]="true" (click)="logOutUser()">LogOut</button>
   </mat-menu>
 </mat-toolbar>
