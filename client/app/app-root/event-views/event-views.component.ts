@@ -23,6 +23,7 @@ export class EventViewsComponent implements OnInit {
 
   @select(['router']) readonly router$: Observable<any>;
   @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
+  @select(['eventList', 'loading']) readonly eventsLoading$: Observable<boolean>;
 
   constructor(
     private router: Router,
@@ -71,7 +72,6 @@ export class EventViewsComponent implements OnInit {
     let start = this.currentDate;
     let end = this.currentDate;
     let interval;
-    console.log('before check =>>',start, end);
     switch (this.calendarView) {
       case CalendarView.MONTH: {
         interval = getMonthLimits(this.currentDate);
@@ -86,7 +86,6 @@ export class EventViewsComponent implements OnInit {
         interval = null;
       }
     }
-    console.log('after check =>>',interval, start, end);
     if (!isNullOrUndefined(interval)) {
       start = interval.firstDayOfGrid;
       start.hours(0).minutes(0).seconds(0);

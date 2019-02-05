@@ -5,7 +5,22 @@ $custom-grey: (
   50: #F7F7F7,
   150: #D5DAE4,
   350: #ACACAC,
-  850: #425262,
+  850: #425262
+);
+
+$event-colors: (
+  10: #D50000,
+  20: #E67C73,
+  30: #F4511E,
+  40: #F6BF26,
+  50: #33B679,
+  60: #0B8043,
+  70: #039BE5,
+  80: #3F51B5,
+  90: #7986CB,
+  100: #8E24AA,
+  110: #616161,
+  120: #4285F4
 );
 
 @mixin transparentBackgroundColor($alpha, $color) {

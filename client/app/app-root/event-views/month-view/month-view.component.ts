@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { select } from '@angular-redux/store';
@@ -31,6 +31,11 @@ export class MonthViewComponent implements OnInit {
   @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
   @select(['eventList', 'events']) readonly events$: Observable<any>;
 
+  @ViewChild('monthCell') monthCell;
+  private numberOfEventsShown = 0;
+  private eventHeight = 14;
+  private unavailableSpace = 32;
+
   constructor() { }
 
   ngOnInit() {
@@ -45,10 +50,17 @@ export class MonthViewComponent implements OnInit {
       takeUntil(this.ngUnsubscribe),
       filter(data =>  !isNullOrUndefined(data))
     ).subscribe((data) => {
-      console.log(data);
-      this.events = data;
+      this.events = data.map(event => {
+        event.colorClass = `color-${this.getRandomIntInclusive(1,12) * 10}`;
+        return event;
+      });
       this.generateCalendar();
     });
+  }
+
+  ngAfterViewInit() {
+    const remainingSpace = this.monthCell.nativeElement.clientHeight - this.unavailableSpace;
+    this.numberOfEventsShown = Math.trunc(remainingSpace / this.eventHeight);
   }
 
   ngOnDestroy() {
@@ -92,7 +104,8 @@ export class MonthViewComponent implements OnInit {
               .filter((date: moment.Moment) => {
                 return event.recurringDays.map(day => this.recurrenceDays.indexOf(day)).indexOf(date.day()) >= 0;
               });
-            const eventDays = this.calculatePossibleDates(baseWeek, event.endDate, event.frequency);
+            const eventDays = this.calculatePossibleDates(baseWeek, event.endDate, event.frequency)
+              .filter(day => day.isSameOrAfter(event.startDate));
             const isDayOfRecurrence = eventDays.reduce((accumulator, day) => {
               accumulator = accumulator || element.mDate.isSame(day);
               return accumulator;
@@ -103,7 +116,6 @@ export class MonthViewComponent implements OnInit {
         return element;
       });
     });
-    console.log(dates);
     this.weeks = dates;
   }
 
@@ -151,5 +163,12 @@ export class MonthViewComponent implements OnInit {
         accumulator[row].push(currentValue);
         return accumulator;
       }, []);
+  }
+
+  moreLabel(number) {
+    if(number == 1) {
+      return `+${number} eveniment`;
+    }
+    return `+${number} evenimente`;
   }
 }

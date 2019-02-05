@@ -34,6 +34,7 @@ $hour-label-width: 50;
     user-select: none;
     position: sticky;
     top: 0;
+    z-index: 100;
     .day-element {
       box-sizing: border-box;
       height: 6*$spacing-unit;
@@ -58,6 +59,7 @@ $hour-label-width: 50;
   .week-container {
     width: 100%;
     display: flex;
+    z-index: 99;
     .hour-labels-container {
       width: #{$hour-label-width}px;
       display: flex;
@@ -78,6 +80,19 @@ $hour-label-width: 50;
       .grid-column {
         width: calc(100% / #{$number-of-columns});
         border-right: 1px solid map_get($custom-grey, 350);
+        position: relative;
+        .event {
+          color: white;
+          position: absolute;
+          cursor: pointer;
+          font-size: 10px;
+          box-shadow: 1px 1px 3px map_get($custom-grey, 850);
+          box-sizing: border-box;
+          padding: 4px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
         &.border-left {
           border-left: 1px solid map_get($custom-grey, 350);
         }

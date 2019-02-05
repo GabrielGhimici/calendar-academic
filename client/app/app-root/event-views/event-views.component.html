@@ -39,7 +39,12 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-  <div class="current-view-container">
+  <div [hidden]="(eventsLoading$ | async)" class="current-view-container">
     <router-outlet></router-outlet>
+  </div>
+  <div *ngIf="(eventsLoading$ | async)" class="loading-container">
+    <div class="spinner-container">
+      <mat-spinner [diameter]="80"></mat-spinner>
+    </div>
   </div>
 </div>
