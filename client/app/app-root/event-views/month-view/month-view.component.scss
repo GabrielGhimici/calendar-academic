@@ -42,17 +42,31 @@ $number-of-rows: 6;
         &.disabled-cell {
           background-color: map_get($custom-grey, 150);
           color: map_get($custom-grey, 350);
+          .bottom-container {
+            .event {
+              cursor: default;
+              pointer-events: none;
+              opacity: 0.8;
+            }
+            .view-more {
+              cursor: default;
+              pointer-events: none;
+              opacity: 0.8;
+            }
+          }
         }
         &.today-cell {
           background-color: lighten($app-main-color, 5%);
           color: white;
-        }
-        &.has-event {
-          cursor: pointer;
+          .bottom-container {
+            .view-more {
+              color: white;
+            }
+          }
         }
         .caption-container {
           width: 80%;
-          height: 50%;
+          height: 32px;
           display: flex;
           justify-content: space-between;
           .day-caption {
@@ -60,6 +74,44 @@ $number-of-rows: 6;
             height: auto;
             margin: auto;
             padding: 0 $spacing-unit;
+          }
+        }
+        .bottom-container {
+          height: calc(100% - 32px);
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          .event {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 $spacing-unit;
+            height: 12px;
+            font-size: 9px;
+            font-weight: 500;
+            margin: 0 2px 2px 2px;
+            width: calc(100% - 2 * #{$spacing-unit} - 4px);
+            border-radius: 2px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+          }
+          .view-more {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 $spacing-unit;
+            height: 12px;
+            font-size: 10px;
+            font-style: italic;
+            margin: auto 0;
+            width: calc(100% - 2 * #{$spacing-unit});
+            color: map_get($custom-grey, 850);
+            user-select: none;
+            cursor: pointer;
+            &:hover {
+              font-weight: 500;
+            }
           }
         }
       }

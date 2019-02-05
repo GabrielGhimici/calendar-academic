@@ -41,4 +41,20 @@
     height: calc(100% - 2*#{$default-spacing} - 40px);
     position: relative;
   }
+  .loading-container {
+    width: 100%;
+    height: calc(100% - 2*#{$default-spacing} - 40px);
+    position: relative;
+    display: flex;
+    .spinner-container {
+      margin: auto;
+      width: 120px;
+      height: 120px;
+      mat-spinner {
+        /deep/ circle {
+          stroke: $app-main-color;
+        }
+      }
+    }
+  }
 }

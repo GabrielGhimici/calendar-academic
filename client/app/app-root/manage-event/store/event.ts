@@ -54,6 +54,7 @@ function normalizeNumber(nr: number) {
 
 export class CalendarEvent {
   constructor(
+    public id: number = -1,
     public name: String = 'Event 1',
     public eventDescription: String = '',
     public location: String = '',

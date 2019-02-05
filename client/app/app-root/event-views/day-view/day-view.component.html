@@ -14,8 +14,17 @@
       </div>
     </div>
     <div class="hour-grid">
-      <div class="grid-column border-left">
+      <div class="grid-column border-left" #gridColumn>
         <div class="grid-element" *ngFor="let hour of hours"></div>
+        <div class="event"
+             *ngFor="let event of shownEvents"
+             [ngClass]="[event.additionalInfo.colorClass]"
+             [ngStyle]="{
+                'height.px': event.additionalInfo.height,
+                'width.px': event.additionalInfo.width,
+                'top.px': event.additionalInfo.top,
+                'left.px': event.additionalInfo.left
+             }">{{event.name}}</div>
       </div>
     </div>
   </div>

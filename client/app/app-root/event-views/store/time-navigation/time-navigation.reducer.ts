@@ -1,9 +1,8 @@
-import { TimeNavigation } from './time-navigation';
+import { CalendarView, TimeNavigation } from './time-navigation';
 import { PayloadAction } from '../../../../store/payload-action';
 import { TimeNavigationActions } from './time-navigation.actions';
 import { State } from '@angular-redux/form/dist/source/state';
 import * as moment from 'moment';
-import { CalendarView } from '../../event-views.component';
 
 const INITIAL_STATE: TimeNavigation = {
   currentDate: moment(),
@@ -85,7 +84,7 @@ export function timeNavigationReducer(state: TimeNavigation = INITIAL_STATE, act
   }
 }
 
-function getMonthLimits(currentDate: any) {
+export function getMonthLimits(currentDate: any) {
   let firstOfMonth = moment(currentDate).startOf('month').day() - 1;
   firstOfMonth = firstOfMonth < 0 ? 6 : firstOfMonth;
   const firstDayOfGrid = moment(currentDate).startOf('month').subtract(firstOfMonth, 'days');
@@ -96,7 +95,7 @@ function getMonthLimits(currentDate: any) {
   }
 }
 
-function getWeekLimits(currentDate: any) {
+export function getWeekLimits(currentDate: any) {
   const firstDayOfGrid = moment(currentDate).startOf('week');
   const endDayOfGrid  = moment(firstDayOfGrid).date(firstDayOfGrid.date() + 6);
   return {

@@ -7,16 +7,23 @@
   <div class="calendar-body">
     <div *ngFor="let week of weeks" class="calendar-week">
       <div *ngFor="let day of week"
+           #monthCell
            class="calendar-cell"
            [ngClass]="{
              'disabled-cell':!isSelectedMonth(day.mDate),
-             'today-cell':(day.today && isSelectedMonth(day.mDate)),
-             'has-event': day.events.length > 0
+             'today-cell':(day.today && isSelectedMonth(day.mDate))
            }">
         <div class="caption-container">
           <div class="day-caption">{{day.mDate?.date()}}</div>
         </div>
         <div class="bottom-container">
+          <div class="event"
+               *ngFor="let event of day.events | slice:0:(day.events.length > numberOfEventsShown?(numberOfEventsShown-1):numberOfEventsShown)"
+               [ngClass]="[event.colorClass]"
+          >{{event.name}}</div>
+          <div class="view-more" *ngIf="day.events.length > numberOfEventsShown">
+            {{moreLabel(day.events.length - (numberOfEventsShown - 1))}}
+          </div>
         </div>
       </div>
     </div>

@@ -14,3 +14,9 @@ export enum Operation {
   Add = 'add',
   Subtract = 'subtract'
 }
+
+export enum CalendarView {
+  MONTH ='month',
+  WEEK = 'week',
+  DAY ='day',
+};
