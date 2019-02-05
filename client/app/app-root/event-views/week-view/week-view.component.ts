@@ -55,7 +55,6 @@ export class WeekViewComponent implements OnInit {
         event.additionalInfo.colorClass = `color-${this.getRandomIntInclusive(1,12) * 10}`;
         return event;
       });
-      console.log(this.events);
       this.generateWeek();
     });
   }
@@ -106,7 +105,6 @@ export class WeekViewComponent implements OnInit {
     this.hourLabels = _.range(1, 25).map(hour => this.formatHour(hour));
     this.hours = _.range(0, 24);
     this.days = weekDates.map((item: CalendarDate, index: number) => {
-      console.log(item.startMoment.format());
       const dayEvents = this.events.filter((event: CalendarEvent) => {
         if (!event.recurrent) {
           return item.startMoment.isBetween(event.startDate, event.endDate, null, '[]');
@@ -137,7 +135,6 @@ export class WeekViewComponent implements OnInit {
         events: this.enrichEvents(dayEvents)
       };
     });
-    console.log(this.days);
   }
 
   enrichEvents(eventList: Array<CalendarEvent>) {
@@ -154,7 +151,7 @@ export class WeekViewComponent implements OnInit {
 
   parseTime(time: string) {
     const timeElements = time.split(':');
-    const hourValue = Number(timeElements[0]) || 1;
+    const hourValue = isNaN(Number(timeElements[0])) ? 1 : Number(timeElements[0]);
     const minValue = (Number(timeElements[1]) || 0) / 60;
     return hourValue + minValue;
   }

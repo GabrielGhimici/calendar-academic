@@ -59,7 +59,7 @@ $hour-label-width: 50;
   .week-container {
     width: 100%;
     display: flex;
-    z-index: 99;
+    z-index: 1;
     .hour-labels-container {
       width: #{$hour-label-width}px;
       display: flex;
@@ -82,13 +82,15 @@ $hour-label-width: 50;
         border-right: 1px solid map_get($custom-grey, 350);
         position: relative;
         .event {
-          color: white;
+          color: map_get($custom-grey, 50);;
           position: absolute;
           cursor: pointer;
           font-size: 10px;
           box-shadow: 1px 1px 3px map_get($custom-grey, 850);
+          border: 1px solid map_get($custom-grey, 50);
+          border-radius: 3px;
           box-sizing: border-box;
-          padding: 4px;
+          padding: 0 4px;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
