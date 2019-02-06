@@ -4,7 +4,7 @@ import { EventListActions } from './event-list.actions';
 import { PayloadAction } from '../../../../store/payload-action';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { CalendarEvent } from '../../../manage-event/store/event';
 import * as moment from 'moment';
 import { isNullOrUndefined } from '../../../../../utils/is-null-or-undefined';
@@ -36,20 +36,26 @@ export class EventListEpics {
     return action$ => action$.pipe(
       ofType(EventListActions.LOAD_EVENTS),
       switchMap((action: PayloadAction) => {
-        return this.http.post(
+        return forkJoin(
+          this.http.post(
           '/api/event/serializedEvents',
           {
             afterDate: action.payload.start,
             beforeDate: action.payload.end
-          }).pipe(
-            switchMap((result: any) => {
-              const parsedEvents: Array<CalendarEvent> = result.events ?
-                result.events.map(event => this.adaptEvent(event)):
-                [];
-              return of(parsedEvents)
-            }),
-            map((data: Array<CalendarEvent>) => this.eventListActions.loadEventsSucceed(data)),
-            catchError(err => of(this.eventListActions.loadEventsFailed(err)))
+          }),
+          this.http.get('/api/event/invitations')
+        ).pipe(
+          switchMap(([eventList, invitationList]: any[]) => {
+            const parsedEvents: Array<CalendarEvent> = eventList.events ?
+              eventList.events.map(event => this.adaptEvent(event)):
+              [];
+            const additionalEvents: Array<CalendarEvent> = invitationList.invitations ?
+              invitationList.invitations.map(inv => this.adaptEvent(inv.event)):
+              [];
+            return of([...parsedEvents, ...additionalEvents]);
+          }),
+          map((data: Array<CalendarEvent>) => this.eventListActions.loadEventsSucceed(data)),
+          catchError(err => of(this.eventListActions.loadEventsFailed(err)))
           )
       })
     )
