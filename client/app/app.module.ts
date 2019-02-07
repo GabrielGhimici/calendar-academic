@@ -53,6 +53,7 @@ import { EventListEpics } from './app-root/event-views/store/event-list/event-li
 import { EventListActions } from './app-root/event-views/store/event-list/event-list.actions';
 import { ProfileEpics } from './store/profile/profile.epics';
 import { ProfileActions } from './store/profile/profile.actions';
+import { EventDetailsComponent } from './app-root/event-details/event-details.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -76,7 +77,8 @@ export const MY_FORMATS = {
     EventViewsComponent,
     WeekViewComponent,
     DayViewComponent,
-    ManageEventComponent
+    ManageEventComponent,
+    EventDetailsComponent
   ],
   imports: [
     MatToolbarModule,
@@ -150,6 +152,7 @@ export const MY_FORMATS = {
     ProfileEpics,
     ProfileActions
   ],
+  entryComponents: [EventDetailsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

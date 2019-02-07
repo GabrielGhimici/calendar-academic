@@ -6,6 +6,8 @@ import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
 import { CalendarEvent } from '../../manage-event/store/event';
+import { EventDetailsComponent } from '../../event-details/event-details.component';
+import { MatDialog } from '@angular/material';
 
 export interface CalendarDate {
   mDate: moment.Moment;
@@ -38,7 +40,8 @@ export class MonthViewComponent implements OnInit {
   private unavailableSpace = 32;
 
   constructor(
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -174,5 +177,15 @@ export class MonthViewComponent implements OnInit {
       return `+${number} eveniment`;
     }
     return `+${number} evenimente`;
+  }
+  openModal(events: Array<CalendarEvent>) {
+    console.log(events);
+    this.dialog.open(EventDetailsComponent, {
+      width: '600px',
+      height: "500px",
+      disableClose: true,
+      autoFocus: false,
+      data: events
+    });
   }
 }
