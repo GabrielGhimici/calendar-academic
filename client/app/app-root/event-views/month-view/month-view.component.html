@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="calendar-body">
-    <div *ngFor="let week of weeks" class="calendar-week">
+    <div *ngFor="let week of weeks;" class="calendar-week">
       <div *ngFor="let day of week"
            #monthCell
            class="calendar-cell"
@@ -21,7 +21,9 @@
                *ngFor="let event of day.events | slice:0:(day.events.length > numberOfEventsShown?(numberOfEventsShown-1):numberOfEventsShown)"
                [ngClass]="[event.colorClass]"
           >{{event.name}}</div>
-          <div class="view-more" *ngIf="day.events.length > numberOfEventsShown">
+          <div class="view-more"
+               *ngIf="day.events.length > numberOfEventsShown"
+               (click)="openModal(day.events)">
             {{moreLabel(day.events.length - (numberOfEventsShown - 1))}}
           </div>
         </div>

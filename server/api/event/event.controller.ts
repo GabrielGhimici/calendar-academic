@@ -1,4 +1,4 @@
-import { Controller, Next, Post, Put, Request, Response } from '@tsed/common';
+import { Controller, Get, Next, Post, Put, Request, Response } from '@tsed/common';
 import { ProxyService } from '../proxy.service';
 
 @Controller('/event')
@@ -25,6 +25,22 @@ export class UserController {
 
   @Post('/serializedEvents')
   getEventList(
+    @Request() request,
+    @Response() response,
+    @Next() next) {
+    return this.proxyService.handleProxy('/service')(request, response, next);
+  }
+
+  @Post('/serializedPrefferedEvents')
+  getPreferredEventList(
+    @Request() request,
+    @Response() response,
+    @Next() next) {
+    return this.proxyService.handleProxy('/service')(request, response, next);
+  }
+
+  @Get('/invitations')
+  getInvitationList(
     @Request() request,
     @Response() response,
     @Next() next) {

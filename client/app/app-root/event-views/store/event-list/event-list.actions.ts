@@ -9,12 +9,13 @@ export class EventListActions {
   static readonly LOAD_EVENTS_FAILED = '[EVENT_LIST]LOAD_FAILED';
   static readonly UPDATE_INTERVAL = '[EVENT_LIST]UPDATE_INTERVAL';
 
-  loadEvents(start: any, end: any): PayloadAction {
+  loadEvents(start: any, end: any, privateEvents: boolean): PayloadAction {
     return {
       type: EventListActions.LOAD_EVENTS,
       payload: {
         start,
-        end
+        end,
+        privateEvents
       }
     }
   }
@@ -30,12 +31,13 @@ export class EventListActions {
       error: error
     }
   }
-  updateInterval(start: any, end: any): PayloadAction {
+  updateInterval(start: any, end: any, privateEvents: boolean): PayloadAction {
     return {
       type: EventListActions.UPDATE_INTERVAL,
       payload: {
         start,
-        end
+        end,
+        privateEvents
       }
     }
   }

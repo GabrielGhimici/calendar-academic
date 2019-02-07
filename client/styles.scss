@@ -17,6 +17,31 @@ html, body {
   font-family: $font-family;
 }
 
+.mat-menu-content {
+  mat-list {
+    mat-list-item {
+      color: map_get($custom-grey, 850);
+      user-select: none;
+      height: 60px !important;
+      .indicator{
+        font-size: 12px !important;
+        text-transform: uppercase;
+        font-weight: bold;
+        opacity: 0.8;
+      }
+      .main-info {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+  button {
+    color: map_get($custom-grey, 850);
+    opacity: 0.8;
+    font-weight: bold;
+  }
+}
+
 .color-10 {
   background-color: map_get($event-colors, 10);
   &:hover {

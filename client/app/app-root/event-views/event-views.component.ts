@@ -20,6 +20,7 @@ export class EventViewsComponent implements OnInit {
   public CALENDAR_VIEW = CalendarView;
   public calendarView: any = CalendarView.MONTH;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private isPrivate: boolean = false;
 
   @select(['router']) readonly router$: Observable<any>;
   @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
@@ -33,6 +34,7 @@ export class EventViewsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isPrivate = this.route.snapshot.data.isPrivate;
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
       filter(data => !isNullOrUndefined(data))
@@ -92,7 +94,7 @@ export class EventViewsComponent implements OnInit {
       end = interval.endDayOfGrid;
       end.hours(0).minutes(0).seconds(0);
     }
-    return this.eventListActions.updateInterval(start, end);
+    return this.eventListActions.updateInterval(start, end, this.isPrivate);
   }
 
   @dispatch()
