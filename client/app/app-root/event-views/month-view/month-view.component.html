@@ -19,7 +19,7 @@
         <div class="bottom-container">
           <div class="event"
                *ngFor="let event of day.events | slice:0:(day.events.length > numberOfEventsShown?(numberOfEventsShown-1):numberOfEventsShown)"
-               [ngClass]="[event.colorClass]"
+               [ngClass]="[event?.additionalInfo?.colorClass]"
           >{{event.name}}</div>
           <div class="view-more"
                *ngIf="day.events.length > numberOfEventsShown"

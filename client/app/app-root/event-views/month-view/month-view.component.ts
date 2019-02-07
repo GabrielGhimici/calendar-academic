@@ -1,13 +1,17 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { select } from '@angular-redux/store';
+import { dispatch, select } from '@angular-redux/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
 import { CalendarEvent } from '../../manage-event/store/event';
 import { EventDetailsComponent } from '../../event-details/event-details.component';
 import { MatDialog } from '@angular/material';
+import { CalendarView } from '../store/time-navigation/time-navigation';
+import { getMonthLimits, getWeekLimits } from '../store/time-navigation/time-navigation.reducer';
+import { EventListActions } from '../store/event-list/event-list.actions';
+import { ActivatedRoute } from '@angular/router';
 
 export interface CalendarDate {
   mDate: moment.Moment;
@@ -30,6 +34,7 @@ export class MonthViewComponent implements OnInit {
   public weeks: CalendarDate[][] = [];
   private events: Array<CalendarEvent> = [];
   private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private isPrivate: boolean = false;
 
   @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
   @select(['eventList', 'events']) readonly events$: Observable<any>;
@@ -41,10 +46,13 @@ export class MonthViewComponent implements OnInit {
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private eventListActions: EventListActions
   ) { }
 
   ngOnInit() {
+    this.isPrivate = this.route.snapshot.data.isPrivate;
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
       filter(data => !isNullOrUndefined(data))
@@ -57,7 +65,8 @@ export class MonthViewComponent implements OnInit {
       filter(data =>  !isNullOrUndefined(data))
     ).subscribe((data) => {
       this.events = data.map(event => {
-        event.colorClass = `color-${this.getRandomIntInclusive(1,12) * 10}`;
+        event.additionalInfo = {};
+        event.additionalInfo.colorClass = `color-${this.getRandomIntInclusive(1,12) * 10}`;
         return event;
       });
       this.generateCalendar();
@@ -179,13 +188,31 @@ export class MonthViewComponent implements OnInit {
     return `+${number} evenimente`;
   }
   openModal(events: Array<CalendarEvent>) {
-    console.log(events);
-    this.dialog.open(EventDetailsComponent, {
+    const detailsModal = this.dialog.open(EventDetailsComponent, {
       width: '600px',
       height: "500px",
       disableClose: true,
       autoFocus: false,
       data: events
     });
+    detailsModal.afterClosed().pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((closedData) => {
+      if (closedData) this.updateInterval();
+    })
+  }
+
+  @dispatch()
+  updateInterval() {
+    let start = this.currentDate;
+    let end = this.currentDate;
+    let interval = getMonthLimits(this.currentDate);
+    if (!isNullOrUndefined(interval)) {
+      start = interval.firstDayOfGrid;
+      start.hours(0).minutes(0).seconds(0);
+      end = interval.endDayOfGrid;
+      end.hours(0).minutes(0).seconds(0);
+    }
+    return this.eventListActions.updateInterval(start, end, this.isPrivate);
   }
 }

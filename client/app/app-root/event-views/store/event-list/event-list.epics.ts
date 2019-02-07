@@ -2,24 +2,27 @@ import { Injectable } from '@angular/core';
 import { combineEpics, ofType } from 'redux-observable';
 import { EventListActions } from './event-list.actions';
 import { PayloadAction } from '../../../../store/payload-action';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, delay, map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, of } from 'rxjs';
 import { CalendarEvent } from '../../../manage-event/store/event';
 import * as moment from 'moment';
 import { isNullOrUndefined } from '../../../../../utils/is-null-or-undefined';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class EventListEpics {
   constructor(
     private eventListActions: EventListActions,
-    private http: HttpClient
+    private http: HttpClient,
+    private matSnackBar: MatSnackBar,
   ) {};
 
   public createEpics() {
     return combineEpics(
       this.updateInterval(),
-      this.loadEvents()
+      this.loadEvents(),
+      this.acceptInvitation()
     );
   }
 
@@ -67,7 +70,7 @@ export class EventListEpics {
               eventList.events.map(event => this.adaptEvent(event)):
               [];
             const additionalEvents: Array<CalendarEvent> = invitationList.invitations ?
-              invitationList.invitations.map(inv => this.adaptEvent(inv.event)):
+              invitationList.invitations.map(inv => this.adaptEvent(inv.event, inv.id)):
               [];
             return of([...parsedEvents, ...additionalEvents]);
           }),
@@ -78,7 +81,40 @@ export class EventListEpics {
     )
   }
 
-  private adaptEvent(event) {
+  private acceptInvitation() {
+    return action$ => action$.pipe(
+      ofType(EventListActions.ACCEPT_INVITATION),
+      switchMap((action: PayloadAction) => {
+        return  of('ceva').pipe(
+          delay(1000),
+          map((_) => {
+            this.matSnackBar.open(
+              'Invitatia a fost acceptata.',
+              '',
+              {
+                duration: 2000,
+                horizontalPosition: 'right',
+              }
+            );
+            return this.eventListActions.acceptInvitationSucceeded()
+          }),
+          catchError(err => {
+            this.matSnackBar.open(
+              'Invitatia nu a putut fi acceptata.',
+              '',
+              {
+                duration: 2000,
+                horizontalPosition: 'right',
+              }
+            );
+            return of(this.eventListActions.acceptInvitationFailed(err))
+          })
+        );
+      })
+    )
+  }
+
+  private adaptEvent(event, invitationId: any = null) {
     const newEvent = new CalendarEvent();
     newEvent.id = event.id;
     newEvent.name = event.name;
@@ -92,6 +128,9 @@ export class EventListEpics {
     newEvent.recurringDays = event.recurring_days ? event.recurring_days.split(';') : [];
     newEvent.recurrent = event.recurrent;
     newEvent.isPublic = isNullOrUndefined(event.owner);
+    newEvent.owner = event.owner || '';
+    newEvent.isInvitation = !isNullOrUndefined(invitationId);
+    newEvent.invitationId = invitationId;
     return newEvent;
   }
 }

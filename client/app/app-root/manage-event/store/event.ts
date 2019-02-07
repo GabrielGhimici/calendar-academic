@@ -55,16 +55,19 @@ function normalizeNumber(nr: number) {
 export class CalendarEvent {
   constructor(
     public id: number = -1,
-    public name: String = 'Event 1',
-    public eventDescription: String = '',
-    public location: String = '',
+    public name: string = 'Event 1',
+    public eventDescription: string = '',
+    public location: string = '',
     public startDate: Moment = moment().utc().hour(0).minute(0).second(0),
     public endDate: Moment = moment().utc().hour(0).minute(0).second(0),
     public startHour: string = getHour(),
     public endHour: string = getHour(true),
     public isPublic: boolean = false,
+    public owner: string = '',
     public recurrent: boolean = false,
     public frequency: number = 1,
-    public recurringDays: string[] = ['monday']
+    public recurringDays: string[] = ['monday'],
+    public isInvitation: boolean = false,
+    public invitationId: any = null
   ){}
 }

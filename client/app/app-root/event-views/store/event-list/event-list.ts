@@ -5,6 +5,8 @@ export interface EventList {
   intervalStart: any;
   intervalEnd: any;
   loading: boolean;
+  accepting: boolean;
+  accepted: boolean;
   error: any;
 }
 

@@ -8,11 +8,21 @@ const INITIAL_STATE: EventList = {
   intervalStart: null,
   intervalEnd: null,
   loading: true,
+  accepting: false,
+  accepted: false,
   error: null
 };
 
 export function eventListReducer(state: EventList = INITIAL_STATE, action: PayloadAction) {
   switch (action.type) {
+    case EventListActions.RESET_ACCEPTED:
+      return State.assign(state, [], {accepted: false});
+    case EventListActions.ACCEPT_INVITATION:
+      return State.assign(state, [], {accepting: true, accepted: false, error: null});
+    case EventListActions.ACCEPT_INVITATION_SUCCEEDED:
+      return State.assign(state, [], {accepting: false, accepted: true, error: null});
+    case  EventListActions.ACCEPT_INVITATION_FAILED:
+      return State.assign(state, [], {accepting: false, accepted: false, error: action.error});
     case EventListActions.LOAD_EVENTS:
       return State.assign(state, [], {loading: true, error: null});
     case EventListActions.LOAD_EVENTS_SUCCEED:

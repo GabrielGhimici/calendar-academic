@@ -32,7 +32,7 @@ import {
   MatTooltipModule,
   MatButtonToggleModule,
   MatSlideToggleModule,
-  MatDatepickerModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatSelectModule, MatMenuModule, MatListModule
+  MatDatepickerModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatSelectModule, MatMenuModule, MatListModule, MatDialogModule, MatDividerModule
 } from '@angular/material';
 import { MonthViewComponent } from './app-root/event-views/month-view/month-view.component';
 import { EventViewsComponent } from './app-root/event-views/event-views.component';
@@ -112,6 +112,8 @@ export const MY_FORMATS = {
     MatSelectModule,
     MatMenuModule,
     MatListModule,
+    MatDialogModule,
+    MatDividerModule,
     AppRoutingModule
   ],
   providers: [

@@ -1,4 +1,41 @@
-<p>
-  event-details works!
-</p>
-{{data | json}}
+<div class="event-details-container">
+  <div mat-dialog-content class="content">
+    <div class="event-element" *ngFor="let event of data; let eIdx=index">
+      <div class="element-content">
+        <div class="badge"
+             [ngClass]="[event?.additionalInfo?.colorClass]">
+        </div>
+        <div class="information">
+          <div class="name">
+            {{event?.name}}
+          </div>
+          <div class="dates">
+            {{event?.startDate.format('dddd, DD MMM')}} {{event?.startHour}} - {{event?.endHour}} {{event?.endDate.format('dddd, DD MMM')}}
+          </div>
+          <div class="owner">
+            {{event?.isPublic ? 'Public' : event?.owner}}
+          </div>
+        </div>
+        <div class="element-actions" *ngIf="event?.isInvitation">
+          <button mat-icon-button
+                  *ngIf="!(accepting$ | async)"
+                  class="primary-button"
+                  (click)="acceptEvent(event, eIdx)"
+                  [disableRipple]="true">
+            <mat-icon>done</mat-icon>
+          </button>
+          <div *ngIf="(accepting$ | async)" class="spinner-container">
+            <mat-spinner [diameter]="24"></mat-spinner>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-flat-button
+            color="primary"
+            [mat-dialog-close]="acceptations > 0"
+            [disableRipple]="true">Cancel</button>
+  </div>
+</div>

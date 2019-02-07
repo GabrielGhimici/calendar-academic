@@ -1,0 +1,107 @@
+@import "../../../styles/palette";
+@import "../../../styles/global-values";
+
+.event-details-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .content {
+    flex: 1;
+    overflow: auto;
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: none;
+      border-radius: 10px;
+      background-color: rgba(0,0,0,0);
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: rgba(0,0,0,0);
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: map_get($custom-grey, 350);
+    }
+    .event-element {
+      display: flex;
+      flex-direction: column;
+      .element-content {
+        display: flex;
+        .badge {
+          width: 10px;
+          height: auto;
+          border-radius: 2px;
+          margin: 4px 12px 4px 0;
+        }
+        .information {
+          display: flex;
+          flex-direction: column;
+          margin: 4px 0;
+          flex: 1;
+          .name {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 14px;
+            color: map_get($custom-grey, 850);
+          }
+          .dates {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+            color: map_get($custom-grey, 350);
+            text-transform: capitalize;
+          }
+          .owner {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+            color: map_get($custom-grey, 350);
+          }
+        }
+        .element-actions {
+          display: flex;
+          .spinner-container {
+            height: 24px;
+            width: 24px;
+            margin: auto $spacing-unit auto 0;
+            mat-spinner {
+              /deep/ circle {
+                stroke: $app-main-color;
+              }
+            }
+          }
+          .mat-icon-button {
+            margin: auto $spacing-unit auto 0;
+            border: 1px solid map_get($custom-grey, 850);
+            color: map_get($custom-grey, 850);
+            width: 3*$spacing-unit;
+            height: 3*$spacing-unit;
+            line-height: 3*$spacing-unit;
+            .mat-icon {
+              line-height: 20px;
+              font-size: 20px;
+              height: 22px;
+              width: 19px;
+            }
+            &.primary-button {
+              border: 1px solid $app-success;
+              color: $app-success;
+            }
+          }
+        }
+      }
+    }
+  }
+  .actions {
+    display: flex;
+    flex-direction: row-reverse;
+    .mat-primary {
+      background-color: $app-main-color;
+    }
+  }
+}
