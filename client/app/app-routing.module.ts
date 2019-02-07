@@ -29,6 +29,7 @@ const routes: Routes = [
       {
         path: 'views',
         component: EventViewsComponent,
+        data: {isPrivate: false},
         children: [
           {
             path: '',
@@ -37,15 +38,18 @@ const routes: Routes = [
           },
           {
             path: 'month',
-            component: MonthViewComponent
+            component: MonthViewComponent,
+            data: {isPrivate: false}
           },
           {
             path: 'week',
-            component: WeekViewComponent
+            component: WeekViewComponent,
+            data: {isPrivate: false}
           },
           {
             path: 'day',
-            component: DayViewComponent
+            component: DayViewComponent,
+            data: {isPrivate: false}
           }
         ]
       },
@@ -56,6 +60,44 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: ManageEventComponent
+      },
+    ],
+    canActivate: [LoginGuard]
+  },{
+    path: 'my-event',
+    component: AppRootComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'views',
+        pathMatch: 'full'
+      },
+      {
+        path: 'views',
+        component: EventViewsComponent,
+        data: {isPrivate: true},
+        children: [
+          {
+            path: '',
+            redirectTo: 'month',
+            pathMatch: 'full'
+          },
+          {
+            path: 'month',
+            component: MonthViewComponent,
+            data: {isPrivate: true}
+          },
+          {
+            path: 'week',
+            component: WeekViewComponent,
+            data: {isPrivate: true}
+          },
+          {
+            path: 'day',
+            component: DayViewComponent,
+            data: {isPrivate: true}
+          }
+        ]
       },
     ],
     canActivate: [LoginGuard]

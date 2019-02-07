@@ -10,7 +10,30 @@ mat-toolbar {
   .header-spacer {
     flex: 1 1 auto;
   }
-
+  a {
+    line-height: calc(#{$header-height} - 2px);
+    height: calc(#{$header-height} - 2px);
+    color: map_get($custom-grey, 50);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0 6px;
+    margin: 0 12px 4px 0;
+    &.active-tab,
+    &.active {
+      border-bottom: 2px solid map_get($custom-grey, 50);
+      height: calc(#{$header-height} - 2px);
+      display: inline-block;
+      margin: 0 12px 0 0;
+      &:hover {
+        color: white;
+        border-bottom: 2px solid white;
+      }
+    }
+    &:hover {
+      color: white;
+    }
+  }
   .user-accessor {
     @include transparentBackgroundColor(0.85, white);
     color: $app-main-color;
@@ -21,7 +44,7 @@ mat-toolbar {
     font-weight: 600;
     border-radius: 3px;
     text-align: center;
-    margin: auto 10px auto 0;
+    margin: auto 10px auto 12px;
     text-transform: capitalize;
     cursor: pointer;
     user-select: none;

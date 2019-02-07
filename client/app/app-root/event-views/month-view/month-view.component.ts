@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { select } from '@angular-redux/store';
@@ -16,7 +16,8 @@ export interface CalendarDate {
 @Component({
   selector: 'month',
   templateUrl: './month-view.component.html',
-  styleUrls: ['./month-view.component.scss']
+  styleUrls: ['./month-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MonthViewComponent implements OnInit {
   public rowSize: number = 7;
@@ -36,7 +37,9 @@ export class MonthViewComponent implements OnInit {
   private eventHeight = 14;
   private unavailableSpace = 32;
 
-  constructor() { }
+  constructor(
+    private cdRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.timeNavigation$.pipe(
@@ -117,6 +120,7 @@ export class MonthViewComponent implements OnInit {
       });
     });
     this.weeks = dates;
+    this.cdRef.markForCheck();
   }
 
   allPassed(dates: Array<moment.Moment>, targetDate: moment.Moment) {
@@ -151,7 +155,7 @@ export class MonthViewComponent implements OnInit {
         const d = moment(firstDayOfGrid).date(date);
         return {
           today: this.isToday(d),
-          events: null,
+          events: [],
           mDate: d,
         };
       })

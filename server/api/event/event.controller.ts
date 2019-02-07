@@ -31,6 +31,14 @@ export class UserController {
     return this.proxyService.handleProxy('/service')(request, response, next);
   }
 
+  @Post('/serializedPrefferedEvents')
+  getPreferredEventList(
+    @Request() request,
+    @Response() response,
+    @Next() next) {
+    return this.proxyService.handleProxy('/service')(request, response, next);
+  }
+
   @Get('/invitations')
   getInvitationList(
     @Request() request,

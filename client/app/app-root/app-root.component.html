@@ -1,6 +1,14 @@
 <mat-toolbar>
   <img src="../../assets/images/fmi-logo-white.png"/>
   <span class="header-spacer"></span>
+  <a routerLink="/event"
+     routerLinkActive="active">
+    Toate Evenimentele
+  </a>
+  <a routerLink="/my-event"
+     routerLinkActive="active">
+    Evenimentele Mele
+  </a>
   <span class="user-accessor" [matMenuTriggerFor]="userMenu">{{profile?.username[0]}}</span>
   <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
     <mat-list>

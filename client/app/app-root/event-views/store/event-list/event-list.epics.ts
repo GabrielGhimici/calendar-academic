@@ -27,7 +27,7 @@ export class EventListEpics {
     return action$ => action$.pipe(
       ofType(EventListActions.UPDATE_INTERVAL),
       map((action: PayloadAction) => {
-        return this.eventListActions.loadEvents(action.payload.start, action.payload.end);
+        return this.eventListActions.loadEvents(action.payload.start, action.payload.end, action.payload.privateEvents);
       })
     )
   }
@@ -36,6 +36,23 @@ export class EventListEpics {
     return action$ => action$.pipe(
       ofType(EventListActions.LOAD_EVENTS),
       switchMap((action: PayloadAction) => {
+        if (action.payload.privateEvents) {
+          return this.http.post(
+            '/api/event/serializedPrefferedEvents',
+            {
+              afterDate: action.payload.start,
+              beforeDate: action.payload.end
+            }).pipe(
+              switchMap((result: any) => {
+                const parsedEvents: Array<CalendarEvent> = result.events ?
+                  result.events.map(event => this.adaptEvent(event)):
+                  [];
+                return of(parsedEvents);
+              }),
+              map((data: Array<CalendarEvent>) => this.eventListActions.loadEventsSucceed(data)),
+              catchError(err => of(this.eventListActions.loadEventsFailed(err)))
+            )
+        }
         return forkJoin(
           this.http.post(
           '/api/event/serializedEvents',
@@ -56,7 +73,7 @@ export class EventListEpics {
           }),
           map((data: Array<CalendarEvent>) => this.eventListActions.loadEventsSucceed(data)),
           catchError(err => of(this.eventListActions.loadEventsFailed(err)))
-          )
+        )
       })
     )
   }
