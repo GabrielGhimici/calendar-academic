@@ -15,7 +15,7 @@ import { isNullOrUndefined } from '../../utils/is-null-or-undefined';
 })
 export class AppRootComponent implements OnInit {
   private ngUnsubscribe: Subject<void> = new Subject<void>();
-  private profile: Profile = null;
+  public profile: Profile = null;
   @select(['profile', 'data']) readonly profile$: Observable<any>;
 
   constructor(

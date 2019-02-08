@@ -18,7 +18,7 @@ export class DayViewComponent implements OnInit {
   public hourLabels: string[] = [];
   public recurrenceDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   private events: Array<CalendarEvent> = [];
-  private shownEvents: Array<CalendarEvent> = [];
+  public shownEvents: Array<CalendarEvent> = [];
   private cellHeight: number = 32;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();

@@ -11,7 +11,7 @@ import { filter, takeUntil } from 'rxjs/operators';
   styleUrls: ['./event-details.component.scss']
 })
 export class EventDetailsComponent implements OnInit {
-  private acceptations: number = 0;
+  public acceptations: number = 0;
   private acceptedEventIndex: number = -1;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   @select(['eventList', 'accepting']) readonly accepting$: Observable<any>;

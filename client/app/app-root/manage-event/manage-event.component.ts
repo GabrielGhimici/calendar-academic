@@ -31,7 +31,7 @@ function generateHourLabels() {
 export class ManageEventComponent implements OnInit {
   public event: CalendarEvent = new CalendarEvent();
   public isEdit: boolean = false;
-  private allDay: boolean = false;
+  public allDay: boolean = false;
   public hourLabels: string[] = generateHourLabels();
   public frequency: number[] = _.range(1,6);
   private previousStartHour = null;
