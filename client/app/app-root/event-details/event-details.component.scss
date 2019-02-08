@@ -8,6 +8,8 @@
   .content {
     flex: 1;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
     &::-webkit-scrollbar-track {
       -webkit-box-shadow: none;
       border-radius: 10px;
@@ -20,6 +22,12 @@
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
       background-color: map_get($custom-grey, 350);
+    }
+    .empty-events {
+      margin: auto;
+      font-size: 12px;
+      font-style: italic;
+      color: map_get($custom-grey, 150);
     }
     .event-element {
       display: flex;

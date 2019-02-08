@@ -1,5 +1,6 @@
 <div class="event-details-container">
   <div mat-dialog-content class="content">
+    <div class="empty-events" *ngIf="data.length === 0">Nu există evenimente de vizualizat</div>
     <div class="event-element" *ngFor="let event of data; let eIdx=index">
       <div class="element-content">
         <div class="badge"
