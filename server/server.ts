@@ -8,8 +8,7 @@ const methodOverride = require('method-override');
 
 @ServerSettings({
   rootDir: Path.resolve(__dirname),
-  port: 3000,
-  httpsPort: 3001,
+  port: process.env.PORT || 3000,
   mount: {
     '/api': '${rootDir}/api/**/*.js',
     '/': '${rootDir}/general/**/*.js'
