@@ -3,7 +3,8 @@
     <div class="day-element dummy-cell"></div>
     <div class="day-element"
          [ngClass]="{'today-cell': day.today}"
-         *ngFor="let day of days">
+         *ngFor="let day of days"
+         (click)="openModal(day.events)">
       {{day.label}}
     </div>
   </div>

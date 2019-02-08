@@ -2,10 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import { select } from '@angular-redux/store';
+import { dispatch, select } from '@angular-redux/store';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
 import { CalendarEvent } from '../../manage-event/store/event';
+import { EventDetailsComponent } from '../../event-details/event-details.component';
+import { getMonthLimits, getWeekLimits } from '../store/time-navigation/time-navigation.reducer';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import { EventListActions } from '../store/event-list/event-list.actions';
 
 
 export interface CalendarDate {
@@ -28,6 +33,7 @@ export class WeekViewComponent implements OnInit {
   public currentDate = moment();
   private events: Array<CalendarEvent> = [];
   private cellHeight: number = 32;
+  private isPrivate: boolean = false;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
@@ -36,9 +42,14 @@ export class WeekViewComponent implements OnInit {
   @ViewChild('gridColumn') gridColumn;
   private columnWidth: number = 0;
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private eventListActions: EventListActions
+  ) { }
 
   ngOnInit() {
+    this.isPrivate = this.route.snapshot.data.isPrivate;
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
       filter(data => !isNullOrUndefined(data))
@@ -178,4 +189,32 @@ export class WeekViewComponent implements OnInit {
       });
   }
 
+  openModal(events: Array<CalendarEvent>) {
+    const detailsModal = this.dialog.open(EventDetailsComponent, {
+      width: '600px',
+      height: "500px",
+      disableClose: true,
+      autoFocus: false,
+      data: events
+    });
+    detailsModal.afterClosed().pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((closedData) => {
+      if (closedData) this.updateInterval();
+    })
+  }
+
+  @dispatch()
+  updateInterval() {
+    let start = this.currentDate;
+    let end = this.currentDate;
+    let interval = getWeekLimits(this.currentDate);
+    if (!isNullOrUndefined(interval)) {
+      start = interval.firstDayOfGrid;
+      start.hours(0).minutes(0).seconds(0);
+      end = interval.endDayOfGrid;
+      end.hours(0).minutes(0).seconds(0);
+    }
+    return this.eventListActions.updateInterval(start, end, this.isPrivate);
+  }
 }

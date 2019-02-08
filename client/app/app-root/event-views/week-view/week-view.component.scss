@@ -47,6 +47,7 @@ $hour-label-width: 50;
       width: calc((100% -  #{$hour-label-width}px) / #{$number-of-columns});
       background: map_get($custom-grey, 50);
       text-transform: capitalize;
+      cursor: pointer;
       &.today-cell {
         background-color: lighten($app-main-color, 5%);
         color: white;

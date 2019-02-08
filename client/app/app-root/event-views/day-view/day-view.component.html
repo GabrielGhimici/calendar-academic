@@ -2,7 +2,8 @@
   <div class="day-header">
     <div class="day-element dummy-cell"></div>
     <div class="day-element"
-         [ngClass]="{'today-cell': isToday(day)}">
+         [ngClass]="{'today-cell': isToday(day)}"
+         (click)="openModal(shownEvents)">
       {{day.format('dddd') + ', ' + day.format('DD MMM')}}
     </div>
   </div>

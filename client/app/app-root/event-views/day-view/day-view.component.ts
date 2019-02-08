@@ -2,10 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash'
 import { Observable, Subject } from 'rxjs';
-import { select } from '@angular-redux/store';
+import { dispatch, select } from '@angular-redux/store';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from '../../../../utils/is-null-or-undefined';
 import { CalendarEvent } from '../../manage-event/store/event';
+import { EventDetailsComponent } from '../../event-details/event-details.component';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import { EventListActions } from '../store/event-list/event-list.actions';
 
 @Component({
   selector: 'day-view',
@@ -20,6 +24,7 @@ export class DayViewComponent implements OnInit {
   private events: Array<CalendarEvent> = [];
   public shownEvents: Array<CalendarEvent> = [];
   private cellHeight: number = 32;
+  private isPrivate: boolean = false;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   @select(['timeNavigation', 'currentDate']) readonly timeNavigation$: Observable<any>;
@@ -28,9 +33,14 @@ export class DayViewComponent implements OnInit {
   @ViewChild('gridColumn') gridColumn;
   private columnWidth: number = 0;
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private eventListActions: EventListActions
+  ) { }
 
   ngOnInit() {
+    this.isPrivate = this.route.snapshot.data.isPrivate;
     this.timeNavigation$.pipe(
       takeUntil(this.ngUnsubscribe),
       filter(data => !isNullOrUndefined(data))
@@ -146,5 +156,29 @@ export class DayViewComponent implements OnInit {
     const hourValue = isNaN(Number(timeElements[0])) ? 1 : Number(timeElements[0]);
     const minValue = (Number(timeElements[1]) || 0) / 60;
     return hourValue + minValue;
+  }
+
+  openModal(events: Array<CalendarEvent>) {
+    const detailsModal = this.dialog.open(EventDetailsComponent, {
+      width: '600px',
+      height: "500px",
+      disableClose: true,
+      autoFocus: false,
+      data: events
+    });
+    detailsModal.afterClosed().pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((closedData) => {
+      if (closedData) this.updateInterval();
+    })
+  }
+
+  @dispatch()
+  updateInterval() {
+    let start = moment(this.day);
+    let end = moment(this.day);
+    start.hours(0).minutes(0).seconds(0);
+    end.hours(0).minutes(0).seconds(0);
+    return this.eventListActions.updateInterval(start, end, this.isPrivate);
   }
 }

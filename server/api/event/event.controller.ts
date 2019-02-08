@@ -23,6 +23,14 @@ export class UserController {
     return this.proxyService.handleSimpleResponseProxy('/service')(request, response, next);
   }
 
+  @Put('/respond')
+  respondInvitation(
+    @Request() request,
+    @Response() response,
+    @Next() next) {
+    return this.proxyService.handleSimpleResponseProxy('/service')(request, response, next);
+  }
+
   @Post('/serializedEvents')
   getEventList(
     @Request() request,

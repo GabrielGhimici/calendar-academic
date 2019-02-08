@@ -85,8 +85,7 @@ export class EventListEpics {
     return action$ => action$.pipe(
       ofType(EventListActions.ACCEPT_INVITATION),
       switchMap((action: PayloadAction) => {
-        return  of('ceva').pipe(
-          delay(1000),
+        return  this.http.put('/api/event/respond', {id: action.payload, response: true}).pipe(
           map((_) => {
             this.matSnackBar.open(
               'Invitatia a fost acceptata.',
