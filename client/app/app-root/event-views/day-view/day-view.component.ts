@@ -85,6 +85,8 @@ export class DayViewComponent implements OnInit {
     this.hourLabels = _.range(1, 25).map(hour => this.formatHour(hour));
     this.hours = _.range(0, 24);
     this.shownEvents = this.enrichEvents(this.events.filter((event: CalendarEvent) => {
+      event.startDate.hours(0).minutes(0).seconds(0).milliseconds(0);
+      event.endDate.hours(0).minutes(0).seconds(0).milliseconds(0);
       if (!event.recurrent) {
         return this.day.isBetween(event.startDate, event.endDate, null, '[]');
       } else {

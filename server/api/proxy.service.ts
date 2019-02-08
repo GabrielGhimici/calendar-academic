@@ -49,6 +49,7 @@ export class ProxyService {
       },
       userResDecorator: function (proxyRes, proxyResData, userReq, userRes) {
         if (!proxyResData.toString('utf8')) return JSON.stringify({OK: false});
+        console.log(proxyResData.toString('utf8'));
         return JSON.stringify({OK: true});
       }
     });

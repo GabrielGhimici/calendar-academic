@@ -106,6 +106,8 @@ export class MonthViewComponent implements OnInit {
     dates.forEach((week: CalendarDate[]) => {
       week.map((element) => {
         element.events = this.events.filter((event: CalendarEvent) => {
+          event.startDate.hours(0).minutes(0).seconds(0).milliseconds(0);
+          event.endDate.hours(0).minutes(0).seconds(0).milliseconds(0);
           if (!event.recurrent) {
             return element.mDate.isBetween(event.startDate, event.endDate, null, '[]');
           } else {

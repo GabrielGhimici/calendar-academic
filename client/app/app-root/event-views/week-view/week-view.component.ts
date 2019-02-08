@@ -117,6 +117,8 @@ export class WeekViewComponent implements OnInit {
     this.hours = _.range(0, 24);
     this.days = weekDates.map((item: CalendarDate, index: number) => {
       const dayEvents = this.events.filter((event: CalendarEvent) => {
+        event.startDate.hours(0).minutes(0).seconds(0).milliseconds(0);
+        event.endDate.hours(0).minutes(0).seconds(0).milliseconds(0);
         if (!event.recurrent) {
           return item.startMoment.isBetween(event.startDate, event.endDate, null, '[]');
         } else {
