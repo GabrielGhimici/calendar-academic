@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 @ServerSettings({
   rootDir: Path.resolve(__dirname),
   port: 3000,
+  httpsPort: 3001,
   mount: {
     '/api': '${rootDir}/api/**/*.js',
     '/': '${rootDir}/general/**/*.js'
@@ -28,7 +29,7 @@ export class Server extends ServerLoader {
         extended: true
       }));
     console.log(`SOOME STUFF -> ${__dirname}/../client`);
-    this.use(Express.static(`${__dirname}/../client`));
+    this.use(Express.static(`${__dirname}/../client/`));
     return null;
   }
 
