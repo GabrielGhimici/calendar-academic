@@ -27,7 +27,7 @@ export class Server extends ServerLoader {
       .use(bodyParser.urlencoded({
         extended: true
       }));
-    console.log(`${__dirname}/../client`);
+    console.log(`SOOME STUFF -> ${__dirname}/../client`);
     this.use(Express.static(`${__dirname}/../client`));
     return null;
   }
