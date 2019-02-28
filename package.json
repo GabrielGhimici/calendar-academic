@@ -10,7 +10,6 @@
     "build-client": "rimraf ./dist/client && ng build --prod",
     "build-server": "rimraf ./dist/server && tsc -p ./server/tsconfig.json",
     "build": "npm run build-client && npm run build-server",
-    "postinstall": "npm run build",
     "start": "node ./dist/server/index.js",
     "test": "ng test",
     "lint": "ng lint"
@@ -90,5 +89,6 @@
     "tns-android": {
       "version": "5.0.0"
     }
-  }
+  },
+  "heroku-run-build-script": true
 }
